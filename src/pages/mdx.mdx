@@ -1,0 +1,20 @@
+import { PureComponent, componentClassExample } from '../components/sample-components'
+import LiveEdit from '../components/live-edit'
+
+export const frontmatter = {
+  title: 'My First MDX Page',
+  author: 'John Munson',
+  draft: false,
+  date: '2016-09-03T23:46:37.121Z',
+  tags: ['mdx']
+}
+
+### My First MDX Page
+
+this is just _markdown_
+
+<PureComponent text="I'm a real life React component imported into an mdx file."/>
+
+and I'm a live editable React component, using [react-live](https://github.com/FormidableLabs/react-live) under the hood
+
+<LiveEdit code={componentClassExample} />

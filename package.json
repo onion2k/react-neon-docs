@@ -1,0 +1,69 @@
+{
+  "name": "gatsby-starter-pack",
+  "description": "Gatsby Starter Pack",
+  "version": "1.0.0",
+  "author": "John Munson <johncmunson91@gmail.com>",
+  "dependencies": {
+    "@mdx-js/mdx": "^0.15.4",
+    "@mdx-js/tag": "^0.15.0",
+    "babel-plugin-styled-components": "^1.8.0",
+    "gatsby": "^2.0.14",
+    "gatsby-image": "^2.0.13",
+    "gatsby-mdx": "^0.1.4",
+    "gatsby-plugin-manifest": "^2.0.4",
+    "gatsby-plugin-offline": "^2.0.5",
+    "gatsby-plugin-react-helmet": "^3.0.0",
+    "gatsby-plugin-sharp": "^2.0.5",
+    "gatsby-plugin-styled-components": "^3.0.0",
+    "gatsby-plugin-typography": "^2.2.0",
+    "gatsby-remark-images": "^2.0.3",
+    "gatsby-source-filesystem": "^2.0.1",
+    "gatsby-transformer-sharp": "^2.1.3",
+    "polished": "^2.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-headroom": "=2.2.2",
+    "react-helmet": "^5.2.0",
+    "react-live": "^1.11.0",
+    "react-typography": "^0.16.13",
+    "styled-components": "^3.4.9",
+    "typography": "^0.16.17"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "serve": "gatsby serve",
+    "format": "prettier --write '{,!(node_modules|.cache|public)/**/}*.{js,json,css,md}'",
+    "lint": "./node_modules/.bin/eslint '{,!(node_modules|.cache|public)/**/}*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.0.0-rc.14",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{,!(node_modules|.cache|public)/**/}*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  }
+}
