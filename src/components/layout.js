@@ -15,7 +15,12 @@ const Layout = ({ children, location }) => (
             title
           }
         }
-        allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+        allMdx(
+          sort: {
+            fields: [frontmatter___title],
+            order: DESC 
+          }
+        ) {
           edges {
             node {
               id
@@ -24,6 +29,7 @@ const Layout = ({ children, location }) => (
                 ... on File {
                   name
                   absolutePath
+                  relativeDirectory
                   relativePath
                 }
               }
@@ -54,20 +60,22 @@ const Layout = ({ children, location }) => (
         <Header siteTitle={data.site.siteMetadata.title} location={location} />
 
         {data.allMdx.edges.map(
-          ({ node }) =>
-            !node.frontmatter.draft && (
+          ({ node }) => {
+            return !node.frontmatter.draft && (
               <div key={node.id}>
                 <h4
                   style={{
                     marginBottom: rhythm(1 / 4)
                   }}
                 >
-                  <Link to={`/${node.parent.name}/`}>
+                  <Link to={`/${node.parent.relativeDirectory}/${node.parent.name}/`}>
                     {node.frontmatter.title || node.parent.name}
                   </Link>
                 </h4>
               </div>
             )
+
+          }
         )}
 
 
