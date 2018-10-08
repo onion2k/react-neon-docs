@@ -1,5 +1,5 @@
 export const frontmatter = {
-  title: 'Light',
+  title: 'Snow',
   author: 'Chris Neale',
   draft: false,
   date: '2018-11-29T23:46:37.121Z',
@@ -8,10 +8,9 @@ export const frontmatter = {
 
 import Tile from "../../components/Tile.js";
 import withNeon, { fx } from "../../dist/index.js";
-const effect = new fx.Light({ startColor: 'hsla(0,100%,100%,0)', endColor: 'hsla(0,100%,0%,1)',  });
-effect.listenMouse();
-const Light = withNeon(Tile, effect);
+const effect = new fx.Snow({ size: 10 });
+const Snow = withNeon(Tile, effect);
 
-### Light
+### Snow
 
-<Light />
+<Snow />
