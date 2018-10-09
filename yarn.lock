@@ -10496,10 +10496,10 @@ react-live@^1.11.0:
     prop-types "^15.5.8"
     unescape "^0.2.0"
 
-react-neon@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.4.6.tgz#3a6e458c44caf863dcb4e087ced2614ac1b51162"
-  integrity sha512-ajtDDmrZrUvvtmxeMUi5sVpzzCtv7mTOCqiNcjZ/sr28eimmkH2FmTwx7yOjPZDJVyKrUTQ80oII+H6DuWVqwg==
+react-neon@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.4.8.tgz#3de80a029f2f9a33754fca4fe08d18629b664e18"
+  integrity sha512-pYsoxINtL/GoCyzgwOJmYaU55oVC2aki6HbejgeHLZU21qrD0+GFS+snCX1DLwlw1Ic4uYdXxcki+oDe6YDyiA==
   dependencies:
     "@babel/plugin-transform-modules-umd" "^7.1.0"
     babel-plugin-add-module-exports "^1.0.0"
