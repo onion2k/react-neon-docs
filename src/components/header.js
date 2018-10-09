@@ -1,17 +1,18 @@
 import React from 'react'
-import Link from './link'
+import { Link } from 'gatsby'
 import Headroom from 'react-headroom'
 import { rhythm, scale } from '../utils/typography'
 import PropTypes from 'prop-types'
 
 const Header = ({ siteTitle, location }) => {
+  console.log(location)
   return (
     <Headroom
       style={{
-        margin: '0 auto',
-        maxWidth: rhythm(22),
-        background: 'white',
         boxShadow: '0px 15px 10px -15px gray'
+      }}
+      wrapperStyle={{
+        marginBottom: '30px'
       }}
     >
       <div
@@ -20,7 +21,9 @@ const Header = ({ siteTitle, location }) => {
           padding: `${rhythm(0.25)} ${rhythm(0.5)}`
         }}
       >
-        <Link to="/">{siteTitle}</Link>
+        <Link to="/">
+          {siteTitle} {location.pathname}
+        </Link>
       </div>
     </Headroom>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import Link from '../components/link'
 import { rhythm } from '../utils/typography'
+import { Link } from 'gatsby'
 import Layout from '../components/layout'
 
 const IndexPage = ({ data, location }) => (
