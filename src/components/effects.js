@@ -38,22 +38,26 @@ const Effects = () => (
       }
     `}
     render={data => (
-      <ul className="menu">
-        {data.allMdx.edges.map(({ node }) => {
-          return (
-            !node.frontmatter.draft && (
-              <li>
-                <Link
-                  key={node.id}
-                  to={`/${node.parent.relativeDirectory}/${node.parent.name}/`}
-                >
-                  {node.frontmatter.title || node.parent.name}
-                </Link>
-              </li>
+      <div className="effects">
+        <h3>Effects</h3>
+        <ul>
+          {data.allMdx.edges.map(({ node }) => {
+            return (
+              !node.frontmatter.draft && (
+                <li key={node.id}>
+                  <Link
+                    to={`/${node.parent.relativeDirectory}/${
+                      node.parent.name
+                    }/`}
+                  >
+                    {node.frontmatter.title || node.parent.name}
+                  </Link>
+                </li>
+              )
             )
-          )
-        })}
-      </ul>
+          })}
+        </ul>
+      </div>
     )}
   />
 )

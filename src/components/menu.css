@@ -1,3 +1,11 @@
 .menu {
   padding: 30px;
 }
+
+.effects {
+  padding: 30px;
+}
+
+.effects > ul {
+  list-style: none;
+}
