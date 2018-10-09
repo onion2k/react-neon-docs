@@ -26,6 +26,7 @@
     "react-headroom": "=2.2.2",
     "react-helmet": "^5.2.0",
     "react-live": "^1.11.0",
+    "react-neon": "^0.4.6",
     "react-typography": "^0.16.13",
     "styled-components": "^3.4.9",
     "twgl.js": "^4.5.2",
