@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
 import Menu from './menu'
+import Effects from './effects'
 import { Link } from 'gatsby'
 import { rhythm } from '../utils/typography'
 import './layout.css'
@@ -32,7 +33,10 @@ const Layout = ({ children, location }) => (
         </Helmet>
 
         <div className="wrapper">
-          <Menu />
+          <div>
+            <Menu />
+            <Effects />
+          </div>
           <div>
             <Header
               siteTitle={data.site.siteMetadata.title}

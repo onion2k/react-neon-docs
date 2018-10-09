@@ -4,13 +4,13 @@ import { Link } from 'gatsby'
 import { rhythm } from '../utils/typography'
 import './menu.css'
 
-const Menu = () => (
+const Effects = () => (
   <StaticQuery
     query={graphql`
-      query pagesQuery {
+      query EffectsQuery {
         allMdx(
           sort: { fields: [frontmatter___title], order: DESC }
-          filter: { frontmatter: { tags: { ne: "effect" } } }
+          filter: { frontmatter: { tags: { eq: "effect" } } }
         ) {
           edges {
             node {
@@ -38,31 +38,24 @@ const Menu = () => (
       }
     `}
     render={data => (
-      <div className="menu">
+      <ul className="menu">
         {data.allMdx.edges.map(({ node }) => {
           return (
             !node.frontmatter.draft && (
-              <div key={node.id}>
-                <h4
-                  style={{
-                    marginBottom: rhythm(1 / 4)
-                  }}
+              <li>
+                <Link
+                  key={node.id}
+                  to={`/${node.parent.relativeDirectory}/${node.parent.name}/`}
                 >
-                  <Link
-                    to={`/${node.parent.relativeDirectory}/${
-                      node.parent.name
-                    }/`}
-                  >
-                    {node.frontmatter.title || node.parent.name}
-                  </Link>
-                </h4>
-              </div>
+                  {node.frontmatter.title || node.parent.name}
+                </Link>
+              </li>
             )
           )
         })}
-      </div>
+      </ul>
     )}
   />
 )
 
-export default Menu
+export default Effects
