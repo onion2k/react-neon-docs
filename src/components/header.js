@@ -21,9 +21,7 @@ const Header = ({ siteTitle, location }) => {
           padding: `${rhythm(0.25)} ${rhythm(0.5)}`
         }}
       >
-        <Link to="/">
-          {siteTitle} {location.pathname}
-        </Link>
+        <Link to="/">{siteTitle}</Link>
       </div>
     </Headroom>
   )

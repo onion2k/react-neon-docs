@@ -6,10 +6,12 @@ export const frontmatter = {
   tags: ['effect']
 }
 
-// import Tile from "../../components/Tile.js";
-// import withNeon from "react-neon";
-// import Toon from "./toon.js";
-// const effect = new Toon({});
-// const ToonTile = withNeon(Tile, effect);
+import Tile from "../../components/Tile.js";
+import withNeon from "react-neon";
+import Toon from "../../components/toon.js";
+const effect = new Toon({});
+const ToonTile = withNeon(Tile, effect);
 
 ### ToonTile
+
+<ToonTile />
