@@ -1,0 +1,27 @@
+export const frontmatter = {
+  title: 'Fuzz',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-11-29T23:46:37.121Z',
+  tags: ['effect']
+}
+
+import { Tile } from "../../components/Tile.js";
+import withNeon, { fx } from "react-neon";
+const Inner = () => (<div className="inner">Content</div>);
+const effect = new fx.Fuzz({ size: 20, padding: 30 });
+effect.listenMouse();
+const Fuzz = withNeon(Inner, effect);
+class FuzzTileWrapper extends React.Component {
+  render(){
+    return (
+      <Tile bg="white" className="outer">
+        <Fuzz />
+      </Tile>
+    )
+  }
+};
+
+### Fuzz
+
+<FuzzTileWrapper />

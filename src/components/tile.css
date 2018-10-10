@@ -2,4 +2,25 @@ div.Tile {
   background-size: cover;
   width: 50vw;
   height: 50vw;
+  display: grid;
+}
+
+div.one {
+  padding: 100px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+div.inner {
+  width: 40vw;
+  height: 40vw;
+  background-size: cover;
+  background-image: url(https://source.unsplash.com/featured/?night);
+}
+
+div.outer {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
 }

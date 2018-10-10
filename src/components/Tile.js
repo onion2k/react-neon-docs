@@ -13,9 +13,10 @@ class Tile extends React.Component {
           backgroundColor: this.props.bg || 'black',
           backgroundImage: this.props.bgIm ? `url(${this.props.bgIm})` : ''
         }}
-        children={children}
         className={className}
-      />
+      >
+        {children}
+      </div>
     )
   }
 }
@@ -26,4 +27,4 @@ class ImgTile extends React.Component {
   }
 }
 
-export default ImgTile
+export { ImgTile as default, Tile }
