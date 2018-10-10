@@ -9,7 +9,7 @@ const Menu = () => (
     query={graphql`
       query pagesQuery {
         allMdx(
-          sort: { fields: [frontmatter___title], order: DESC }
+          sort: { fields: [frontmatter___date], order: ASC }
           filter: { frontmatter: { tags: { ne: "effect" } } }
         ) {
           edges {
@@ -39,23 +39,16 @@ const Menu = () => (
     `}
     render={data => (
       <div className="menu">
+        <h3>Menu</h3>
         {data.allMdx.edges.map(({ node }) => {
           return (
             !node.frontmatter.draft && (
               <div key={node.id}>
-                <h4
-                  style={{
-                    marginBottom: rhythm(1 / 4)
-                  }}
+                <Link
+                  to={`/${node.parent.relativeDirectory}/${node.parent.name}/`}
                 >
-                  <Link
-                    to={`/${node.parent.relativeDirectory}/${
-                      node.parent.name
-                    }/`}
-                  >
-                    {node.frontmatter.title || node.parent.name}
-                  </Link>
-                </h4>
+                  {node.frontmatter.title || node.parent.name}
+                </Link>
               </div>
             )
           )

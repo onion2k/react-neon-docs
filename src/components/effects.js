@@ -9,7 +9,7 @@ const Effects = () => (
     query={graphql`
       query EffectsQuery {
         allMdx(
-          sort: { fields: [frontmatter___title], order: DESC }
+          sort: { fields: [frontmatter___title], order: ASC }
           filter: { frontmatter: { tags: { eq: "effect" } } }
         ) {
           edges {
