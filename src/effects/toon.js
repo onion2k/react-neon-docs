@@ -1,4 +1,4 @@
-import Fx from '../neon/Fx'
+import { Fx } from 'react-neon/dist/index.babel.js'
 
 const TAU = Math.PI * 2
 
