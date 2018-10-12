@@ -23,4 +23,21 @@ const Sparks = withNeon(SparksTile, effect);
 
 ### Sparks
 
+```javascript
+import { Tile } from "../../components/Tile.js";
+import withNeon, { fx } from "react-neon";
+const effect = new fx.Sparks();
+effect.listenMouse();
+class SparksTile extends React.Component {
+  render(){
+    return (
+        <Tile bg="black" className="one">
+          <div style={{ backgroundImage: "url(https://source.unsplash.com/random?s)" }}></div>
+        </Tile>
+        )
+  }
+};
+const Sparks = withNeon(SparksTile, effect);
+```
+
 <Sparks />

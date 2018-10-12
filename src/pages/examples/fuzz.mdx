@@ -6,22 +6,20 @@ export const frontmatter = {
   tags: ['effect']
 }
 
-import { Tile } from "../../components/Tile.js";
+import Tile from "../../components/Tile.js";
 import withNeon, { fx } from "react-neon";
-const Inner = () => (<div className="inner">Content</div>);
 const effect = new fx.Fuzz({ size: 20, padding: 30 });
 effect.listenMouse();
-const Fuzz = withNeon(Inner, effect);
-class FuzzTileWrapper extends React.Component {
-  render(){
-    return (
-      <Tile bg="white" className="outer">
-        <Fuzz />
-      </Tile>
-    )
-  }
-};
+const Fuzz = withNeon(Tile, effect);
 
 ### Fuzz
 
-<FuzzTileWrapper />
+```javascript
+import Tile from "../../components/Tile.js";
+import withNeon, { fx } from "react-neon";
+const effect = new fx.Fuzz({ size: 50, padding: 50 });
+effect.listenMouse();
+const Fuzz = withNeon(Tile, effect);
+```
+
+<Fuzz />

@@ -1,7 +1,7 @@
 div.Tile {
   background-size: cover;
-  width: 50vw;
-  height: 50vw;
+  width: 25vw;
+  height: 25vw;
   display: grid;
 }
 
@@ -12,8 +12,8 @@ div.one {
 }
 
 div.inner {
-  width: 40vw;
-  height: 40vw;
+  width: 15vw;
+  height: 15vw;
   background-size: cover;
   background-image: url(https://source.unsplash.com/featured/?night);
 }
