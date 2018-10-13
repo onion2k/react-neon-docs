@@ -3,6 +3,7 @@ div.Tile {
   width: 25vw;
   height: 25vw;
   display: grid;
+  margin: 0 auto;
 }
 
 div.one {

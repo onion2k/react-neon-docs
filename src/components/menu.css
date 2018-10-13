@@ -1,32 +1,25 @@
-.menu {
-  padding: 30px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1rem;
-}
-
-.menu > h3 {
-  padding: 0px;
-  margin: 0px 0px 15px 0px;
-}
-
+.pages,
 .effects {
-  padding: 0px 0px 0px 30px;
+  padding: 0 0 30px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1rem;
 }
 
+.pages > h3,
 .effects > h3 {
   padding: 0px;
   margin: 0px 0px 15px 0px;
 }
 
+.pages > ul,
 .effects > ul {
   padding: 0px;
   margin: 0px 0px 0px 15px;
   list-style: none;
 }
 
+.pages > ul > li,
 .effects > ul > li {
   padding: 0px;
-  margin: 0px 0px 0px 0px;
+  margin: 0px 0px 10px;
 }

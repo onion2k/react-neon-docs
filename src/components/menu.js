@@ -38,21 +38,28 @@ const Menu = () => (
       }
     `}
     render={data => (
-      <div className="menu">
-        <h3>Menu</h3>
-        {data.allMdx.edges.map(({ node }) => {
-          return (
-            !node.frontmatter.draft && (
-              <div key={node.id}>
-                <Link
-                  to={`/${node.parent.relativeDirectory}/${node.parent.name}/`}
-                >
-                  {node.frontmatter.title || node.parent.name}
-                </Link>
-              </div>
+      <div className="pages">
+        <h3>React Neon</h3>
+        <ul>
+          {data.allMdx.edges.map(({ node }) => {
+            return (
+              !node.frontmatter.draft && (
+                <li key={node.id}>
+                  <Link
+                    to={`/${node.parent.relativeDirectory}/${
+                      node.parent.name
+                    }/`}
+                  >
+                    {node.frontmatter.title || node.parent.name}
+                  </Link>
+                </li>
+              )
             )
-          )
-        })}
+          })}
+          <li>
+            <a href="https://github.com/onion2k/react-neon/">Github</a>
+          </li>
+        </ul>
       </div>
     )}
   />

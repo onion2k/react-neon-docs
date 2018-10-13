@@ -2,11 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-import Header from './header'
 import Menu from './menu'
 import Effects from './effects'
-import { Link } from 'gatsby'
-import { rhythm } from '../utils/typography'
 import './layout.css'
 
 const Layout = ({ children, location }) => (
@@ -33,17 +30,11 @@ const Layout = ({ children, location }) => (
         </Helmet>
 
         <div className="wrapper">
-          <div>
+          <div className="menu">
             <Menu />
             <Effects />
           </div>
-          <div>
-            <Header
-              siteTitle={data.site.siteMetadata.title}
-              location={location}
-            />
-            {children}
-          </div>
+          <div className="main">{children}</div>
         </div>
       </>
     )}

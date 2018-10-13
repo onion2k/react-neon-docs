@@ -1,4 +1,15 @@
 .wrapper {
   display: grid;
+  min-height: 100vh;
   grid-template-columns: 1fr 4fr;
+}
+
+.menu {
+  padding: 30px;
+  background-color: antiquewhite;
+  border-right: 1px solid #888;
+}
+
+.main {
+  padding: 30px;
 }
