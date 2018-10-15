@@ -11,7 +11,21 @@ import withNeon, { fx } from "react-neon";
 const effect = new fx.Snow({ size: 10 });
 const Snow = withNeon(Tile, effect);
 
-### Snow
+### Effects / Snow
+
+Add a snow fall effect to a component.
+
+### Options
+
+| Option  | What it does |
+|---|---|
+| size | Distance to draw outside of the component in pixels |
+
+### Example
+
+<Snow />
+
+### Example Code
 
 ```javascript
 import Tile from "../../components/Tile.js";
@@ -19,5 +33,3 @@ import withNeon, { fx } from "react-neon";
 const effect = new fx.Snow({ size: 10 });
 const Snow = withNeon(Tile, effect);
 ```
-
-<Snow />
