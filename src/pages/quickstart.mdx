@@ -42,11 +42,15 @@ If you want to create your own effect you should look at the Creating Effects pa
 
 React Neon works the same way as any other HoC (High Order Component). You need to export withNeon() with your component and the effect you're using as parameters.
 
-```import withNeon, { fx } from 'react-neon';
+```javascript
+import react from 'react';
+import withNeon, { fx } from 'react-neon';
 
-const myComponent = <MyComponent />;
+const myComponent = () => ( <div>My Component</div> );
 const effect = new fx.Neon({ size: 10 });
 
-export default withNeon(myComponent, effect);```
+// export myComponent;
+export default withNeon(myComponent, effect);
+```
 
 That's really all there is to a basic effect.
