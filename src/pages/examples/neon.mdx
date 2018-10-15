@@ -11,7 +11,21 @@ import withNeon, { fx } from "react-neon";
 const effect = new fx.Neon({ size: 10 });
 const Neon = withNeon(Tile, effect);
 
-### Neon
+### Effects / Neon
+
+The shader effect puts a flickering Neon effect around a component. It listens to an intersection observer and switches off the neon effect if the component is off the screen.
+
+### Options
+
+| Option  | What it does |
+|---|---|
+| size | Size of the neon effect |
+
+### Example
+
+<Neon />
+
+### Example Code
 
 ```javascript
 import Tile from "../../components/Tile.js";
@@ -20,4 +34,3 @@ const effect = new fx.Neon({ size: 10 });
 const Neon = withNeon(Tile, effect);
 ```
 
-<Neon />
