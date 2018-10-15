@@ -7,3 +7,46 @@ export const frontmatter = {
 }
 
 ### Quick Start Guide
+
+To get started with React Neon you need a React component to wrap with a Neon layer. If you don't have any knowledge of React then that's the place to start.
+
+A Neon layer is a High Order React component that returns the component that's passed to it and a new `<canvas />` that's set up to sit in the same position on the page as the component. The canvas is initialised in either 2d or WebGL mode, and a draw() callback is repeatedly called using requestAnimationFrame() to draw to it.
+
+The drawing itself is done by a Neon effect plugin. React Neon comes with a bundle of pre-defined effects, but the idea really is that you'll write your own.
+
+#### Installing React Neon
+
+If you started your React app with `create-react-app` or if you're building your site with a bundler such as Webpack or Parcel, then you should install React Neon using npm;
+
+`npm install react-neon`
+
+#### Importing React Neon
+
+Once React Neon has finished installing you can import it and its effects bundle in to your app where you want to wrap your component.
+
+`import withNeon, { fx } from 'react-neon';`
+
+#### Initialising an effect
+
+To use an effect you need to initial it first. For the effects in the fx library included with React Neon this is a matter of instantiating a new effect object. For example, if you wanted to use the Neon effect you'd need to use;
+
+`const effect = new fx.Neon();`
+
+Some effects take parameters in the form of an object that's passed in when they're instantiated. To create a Neon effect with a size of 10px you need to pass in an object with a property of 'size' set to 10;
+
+`const effect = new fx.Neon({ size: 10 });`
+
+If you want to create your own effect you should look at the Creating Effects page.
+
+#### Exporting your component with an effect
+
+React Neon works the same way as any other HoC (High Order Component). You need to export withNeon() with your component and the effect you're using as parameters.
+
+```import withNeon, { fx } from 'react-neon';
+
+const myComponent = <MyComponent />;
+const effect = new fx.Neon({ size: 10 });
+
+export default withNeon(myComponent, effect);```
+
+That's really all there is to a basic effect.
