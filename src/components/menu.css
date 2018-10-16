@@ -22,3 +22,15 @@
   padding: 0px;
   margin: 0px 0px 10px;
 }
+
+.pages > ul > li > a,
+.effects > ul > li > a {
+  color: #444;
+  text-decoration: none;
+}
+
+.pages > ul > li > a:hover,
+.effects > ul > li > a:hover {
+  color: #44f;
+  text-decoration: underline;
+}
