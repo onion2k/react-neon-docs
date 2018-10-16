@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Proza+Libre|Source+Sans+Pro');
+
 .wrapper {
   display: grid;
   min-height: 100vh;
@@ -8,8 +10,50 @@
   padding: 30px;
   background-color: antiquewhite;
   border-right: 1px solid #888;
+  font-family: 'Proza Libre', 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;
 }
 
 .main {
   padding: 30px;
+  margin-right: 100px;
+  font-family: 'Source Sans Pro', 'Gill Sans', 'Gill Sans MT', Calibri,
+    'Trebuchet MS', sans-serif;
+  line-height: 1.5em;
+}
+
+.main h3 {
+  font-size: 2em;
+  font-weight: 900;
+}
+
+.main h4 {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
 }
