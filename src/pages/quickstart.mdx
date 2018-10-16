@@ -10,7 +10,7 @@ export const frontmatter = {
 
 To get started with React Neon you need a React component to wrap with a Neon layer. If you don't have any knowledge of React then that's the place to start.
 
-A Neon layer is a High Order React component that returns the component that's passed to it and a new `<canvas />` that's set up to sit in the same position on the page as the component. The canvas is initialised in either 2d or WebGL mode, and a draw() callback is repeatedly called using requestAnimationFrame() to draw to it.
+A Neon layer is a React High Order Component that returns the component that's passed in along with a new `<canvas />` that's set up to sit in the same position on the page as the component. The canvas is initialised in either 2d or WebGL mode, and a draw() callback is repeatedly called using requestAnimationFrame() to draw to it.
 
 The drawing itself is done by a Neon effect plugin. React Neon comes with a bundle of pre-defined effects, but the idea really is that you'll write your own.
 
@@ -24,7 +24,11 @@ If you started your React app with `create-react-app` or if you're building your
 
 Once React Neon has finished installing you can import it and its effects bundle in to your app where you want to wrap your component.
 
-`import withNeon, { fx } from 'react-neon';`
+```javascript
+import withNeon, { fx } from 'react-neon';
+```
+
+Now that Neon is available in the component it's time to use it.
 
 #### Initialising an effect
 
