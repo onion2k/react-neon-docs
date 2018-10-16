@@ -7,3 +7,13 @@ export const frontmatter = {
 }
 
 ### Create An Effect
+
+
+
+#### Webpack compatibility
+
+By default Webpack isn't set up to compile code from node_modules. Consequently creating an effect that extends the Fx base class doesn't work. In order to resolve this React Neon includes a babel build of the code that can be used as the basis of your effect in its dist directory.
+
+`import { Fx } from 'react-neon/dist/index.babel.js'`
+
+More coming soon...

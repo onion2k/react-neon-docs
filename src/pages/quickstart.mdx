@@ -8,13 +8,18 @@ export const frontmatter = {
 
 ### Quick Start Guide
 
+[Using Neon in a bundle](#bundle)  
+[Using Neon from a CDN](#browser)
+
+#### <a name="bundle"></a> Using Neon in a bundle
+
 To get started with React Neon you need a React component to wrap with a Neon layer. If you don't have any knowledge of React then that's the place to start.
 
 A Neon layer is a React High Order Component that returns the component that's passed in along with a new `<canvas />` that's set up to sit in the same position on the page as the component. The canvas is initialised in either 2d or WebGL mode, and a draw() callback is repeatedly called using requestAnimationFrame() to draw to it.
 
 The drawing itself is done by a Neon effect plugin. React Neon comes with a bundle of pre-defined effects, but the idea really is that you'll write your own.
 
-#### Installing React Neon
+#### Installing React Neon from NPM
 
 If you started your React app with `create-react-app` or if you're building your site with a bundler such as Webpack or Parcel, then you should install React Neon using npm;
 
@@ -58,3 +63,24 @@ export default withNeon(myComponent, effect);
 ```
 
 That's really all there is to a basic effect.
+
+#### <a name="browser"></a> Loading Neon from a CDN
+
+If you're not useing a bundler then you can still use React Neon by loading the UMD or Babel bundle from a CDN.
+
+```html
+<script>https://unpkg.com/react-neon@0.4.5/dist/index.umd.js</script>
+```
+
+When you load from a CDN using the UMD bundle React Neon uses a `neon` namespace so it doesn't clash with any other code. Consequently you need to prefix any Neon calls with `neon.`. Also, as withNeon is the default export from the package it's called neon.default instead of neon.withNeon. This may be fixed in a future version.
+
+```javascript
+
+const myComponent = () => ( <div>My Component</div> );
+const effect = new neon.fx.Neon({ size: 10 });
+
+// export myComponent;
+export default neon.default(myComponent, effect);
+```
+
+For an example of using React Neon in a browser loading from a CDN see [React Neon Example - Fuzz](https://codepen.io/onion2k/pen/rqBwBM) on Codepen.
