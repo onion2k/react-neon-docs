@@ -6,6 +6,29 @@ export const frontmatter = {
   tags: ['neon', 'effects']
 }
 
+import Tile from "../components/Tile.js";
+import withNeon, { Fx } from "react-neon/dist/index.babel.js";
+class MyNeonEffect extends Fx {
+    init() {
+      this.x = 0;
+    }
+    draw() {
+      if (this.ctx!==null) {
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+        this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+        this.x += 1;
+        if (this.x > this.bb.width) { this.x = 0; }
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.bb.height / 2 - 25, 50, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+const effect = new MyNeonEffect();
+const CircleTile = withNeon(Tile, effect);
+
+
 ### Creating An Effect
 
 #### The effect base class
@@ -121,13 +144,17 @@ export default class MyNeonEffect extends Fx {
         if (this.x > this.bb.width) { this.x = 0; }
 
         this.ctx.beginPath();
-        this.ctx.arc(x, this.bb.height / 2 - 25, 50, 0, 2 * Math.PI);
+        this.ctx.arc(this.x, this.bb.height / 2 - 25, 50, 0, 2 * Math.PI);
         this.ctx.fill();
       }
       this.raf = requestAnimationFrame(this.draw);
     }
 }
 ```
+
+So far what we have looks like...
+
+<CircleTile />
 
 #### Listening for events
 
