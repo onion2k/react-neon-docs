@@ -1,0 +1,23 @@
+export const frontmatter = {
+  title: 'The Effect Lifecycle',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-10-03T23:47:37.121Z',
+  tags: ['neon', 'effects']
+}
+
+### The Effect Lifecycle
+
+There are several steps that happen to get an effect up and running. When the effect is initialised its constructor() function is called. When the Neon HoC mounts in the DOM the effect's listeners() method is called. Then the wrapped component is observed by Neon's ResizeObserver which calls Neon's resize() method.
+
+This in turn calls the effect's cancel() method to stop the requestAnimationFrame callback, then it works out the size of the component and passes that information to the effect's attach() method. The attach() call in turn fire's the effect's init() method. Finally the effect's draw() method is (re)started with a new requestAnimationFrame call.
+
+1. Effect constructor() called.
+1. Neon HoC mounts
+1. Effect listeners() method called.
+1. Effect's cancel() method runs to stop animating.
+1. Effect's attach() method runs.
+1. Effect's init() method runs.
+1. Effect's draw() to start animating.
+
+Each stage of the effect lifecycle can be overridden by adding a method to your effect class, but you don't need to that.

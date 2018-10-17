@@ -1,30 +1,14 @@
 export const frontmatter = {
-  title: 'Create An Effect',
+  title: 'Creating An Effect',
   author: 'Chris Neale',
   draft: false,
   date: '2018-10-03T23:46:37.121Z',
   tags: ['neon', 'effects']
 }
 
-### Create An Effect
+### Creating An Effect
 
-#### The effect lifecycle
-
-There are several steps that happen to get an effect up and running. When the effect is initialised its constructor() function is called. When the Neon HoC mounts in the DOM the effect's listeners() method is called. Then the wrapped component is observed by Neon's ResizeObserver which calls Neon's resize() method.
-
-This in turn calls the effect's cancel() method to stop the requestAnimationFrame callback, then it works out the size of the component and passes that information to the effect's attach() method. The attach() call in turn fire's the effect's init() method. Finally the effect's draw() method is (re)started with a new requestAnimationFrame call.
-
-1. Effect constructor() called.
-1. Neon HoC mounts
-1. Effect listeners() method called.
-1. Effect's cancel() method runs to stop animating.
-1. Effect's attach() method runs.
-1. Effect's init() method runs.
-1. Effect's draw() to start animating.
-
-Each stage of the effect lifecycle can be overridden by adding a method to your effect class, but you don't need to that.
-
-#### Creating an effect class
+#### The effect base class
 
 Effects in Neon are based on the FX class. To create a new effect you need to extend that class.
 
@@ -32,7 +16,7 @@ Effects in Neon are based on the FX class. To create a new effect you need to ex
 import { Fx } from 'react-neon';
 
 export default class MyNeonEffect extends Fx {
-
+    // ... override methods
 }
 ```
 
@@ -46,26 +30,105 @@ import { Fx } from 'react-neon/dist/index.babel.js'`
 
 More instructions about configuring babel coming soon...
 
-#### Adding a draw call
-
-Coming soon...
-
 #### Initialising data
 
-Coming soon...
+Anything that's passed in to the effect constructor will be merged with the default options. If you need to do more than simply storing the options you can override the constructor but you'll need to remember to call super() before you can use `this`.
+
+NOTE: Overriding constructor() means your code will only be run when you first initialse the effect. If you want data to be reinitialised when the animation stops and restarts on a resize event use init().
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    constructor(options) {
+      super(options);
+      // ... code to manipulate options
+    }
+}
+```
+
+An alternative to using the constructor() is the init() method. This is called every time the component resizes, so it can change the position and size of effects. In general it's a better idea to use init() rather than the constructor.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    init() {
+      // ... code to generate data
+    }
+}
+```
+
+#### Adding a draw call
+
+The actual drawing is achieved with the draw() method. The base class has an empty function so you need to override it.
+
+The canvas context is available as this.ctx, so your code only needs to concentrate on drawing each frame.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    init() {
+      // ... code to generate data
+    }
+
+    draw() {
+      // ... draw something on this.ctx
+    }
+}
+```
+
+NOTE: It's worthwhile guarding against trying to draw before the canvas is actually available. As ctx is set to null before it's available this can be a simple if statement.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    init() {
+      // ... code to generate data
+    }
+
+    draw() {
+      if (this.ctx!==null) {
+        // ... draw something on this.ctx
+      }
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+```
+
+Here I've also added a new line to call the draw() method again, and put the callback identifier in to this.raf so it can be cancelled in cancel();
+
+For this simple effect example I'll clear the canvas on each frame, and draw a circle on that moves across from left to right.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    init() {
+      this.x = 0;
+    }
+
+    draw() {
+      if (this.ctx!==null) {
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+
+        this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+
+        this.x += 1;
+        
+        if (this.x > this.bb.width) { this.x = 0; }
+
+        this.ctx.beginPath();
+        this.ctx.arc(x, this.bb.height / 2 - 25, 50, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+```
 
 #### Listening for events
-
-Coming soon...
-
-#### Following the mouse
-
-Coming soon...
-
-#### Scroll events
-
-Coming soon...
-
-#### Intersection
 
 Coming soon...
