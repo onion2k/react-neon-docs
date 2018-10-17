@@ -8,12 +8,64 @@ export const frontmatter = {
 
 ### Create An Effect
 
+#### The effect lifecycle
 
+There are several steps that happen to get an effect up and running. When the effect is initialised its constructor() function is called. When the Neon HoC mounts in the DOM the effect's listeners() method is called. Then the wrapped component is observed by Neon's ResizeObserver which calls Neon's resize() method.
 
-#### Webpack compatibility
+This in turn calls the effect's cancel() method to stop the requestAnimationFrame callback, then it works out the size of the component and passes that information to the effect's attach() method. The attach() call in turn fire's the effect's init() method. Finally the effect's draw() method is (re)started with a new requestAnimationFrame call.
 
-By default Webpack isn't set up to compile code from node_modules. Consequently creating an effect that extends the Fx base class doesn't work. In order to resolve this React Neon includes a babel build of the code that can be used as the basis of your effect in its dist directory.
+1. Effect constructor() called.
+1. Neon HoC mounts
+1. Effect listeners() method called.
+1. Effect's cancel() method runs to stop animating.
+1. Effect's attach() method runs.
+1. Effect's init() method runs.
+1. Effect's draw() to start animating.
 
-`import { Fx } from 'react-neon/dist/index.babel.js'`
+Each stage of the effect lifecycle can be overridden by adding a method to your effect class, but you don't need to that.
 
-More coming soon...
+#### Creating an effect class
+
+Effects in Neon are based on the FX class. To create a new effect you need to extend that class.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+
+}
+```
+
+#### A note about Webpack compatibility
+
+By default Webpack doesn't compile code from node_modules, so creating an effect that extends the Fx base class won't work if you don't have that set up. In order to resolve this React Neon includes a babel build of the code that can be used as the basis of your effect in its dist directory. You need to replace the FX import to get the class from the index.babel.js file;
+
+```javascript
+import { Fx } from 'react-neon/dist/index.babel.js'`
+```
+
+More instructions about configuring babel coming soon...
+
+#### Adding a draw call
+
+Coming soon...
+
+#### Initialising data
+
+Coming soon...
+
+#### Listening for events
+
+Coming soon...
+
+#### Following the mouse
+
+Coming soon...
+
+#### Scroll events
+
+Coming soon...
+
+#### Intersection
+
+Coming soon...
