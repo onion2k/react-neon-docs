@@ -1,0 +1,68 @@
+export const frontmatter = {
+  title: 'Events - Mouse',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-10-02T23:10:10.00Z',
+  tags: ['neon', 'effects']
+}
+
+import Tile from "../components/Tile.js";
+import withNeon, { Fx } from "react-neon/dist/index.babel.js";
+class MyNeonEffect extends Fx {
+    draw() {
+      if (this.ctx!==null) {
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+        this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+        this.ctx.beginPath();
+        this.ctx.arc(this.mouse[0], this.mouse[1], 50, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+const effect = new MyNeonEffect();
+effect.listenMouse();
+const CircleMouseTile = withNeon(Tile, effect);
+
+### Events - Mouse
+
+Effects can listen to the user's mouse position over the component (or the effect layer in a later version). To listen to the mouse you should call lisetnMouse() on the effect after initialisation.
+
+```javascript
+import Effect from './MyNeonEffect';
+const effect = new Effect();
+effect.listenMouse();
+```
+
+Once the effect is listening to the mouse the users' mouse position will be available in the effect as a 2D array called this.mouse. The first array value is the x position, the second is the y position.
+
+Using these values you can draw things where the user's mouse is. Using the example effect that you if you followed [Create An Effect](/createaneffect) you can replace the x and y values with this.mouse to draw the circle under the mouse.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    draw() {
+      // If we have a canvas to draw on...
+      if (this.ctx!==null) {
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+
+        // Set the fill style to opaque white
+        this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+
+        // Draw a circle
+        this.ctx.beginPath();
+        this.ctx.arc(this.mouse[0], this.mouse[1], 50, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+      }
+      // Call the next frame
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+```
+
+This gives us an effect like this. (Move your mouse over the effect to see it properly.)
+
+<CircleMouseTile />
