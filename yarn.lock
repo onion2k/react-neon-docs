@@ -10754,9 +10754,9 @@ react-live@^1.11.0:
     unescape "^0.2.0"
 
 react-neon@^0.4.8:
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.4.11.tgz#77b2322bae9695578949ba172bd6516cfc939a65"
-  integrity sha512-ha4zheheccHIkpravm8gVNPE55aynnlslhun1pYglXtxYccSuQ0/jOisF7VDnorjtIEZbMIwf2YRw6Z88k1NMA==
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.4.12.tgz#b085669781b80727e65b0a727f24bb060404dc3e"
+  integrity sha512-ouokXL1OpbWbBSaQJ0cIxRXDkNkR/ds6bvvwsf4ZvytEQ4Deu0WYUhhih4vx2rthGEsjz1tMBm3ZvKNpkwCwsA==
   dependencies:
     "@babel/plugin-transform-modules-umd" "^7.1.0"
     babel-plugin-add-module-exports "^1.0.0"

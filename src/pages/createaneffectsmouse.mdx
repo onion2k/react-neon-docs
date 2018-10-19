@@ -8,7 +8,7 @@ export const frontmatter = {
 
 import Tile from "../components/Tile.js";
 import withNeon, { Fx } from "react-neon/dist/index.babel.js";
-class MyNeonEffect extends Fx {
+class MyMouseEffect extends Fx {
     draw() {
       if (this.ctx!==null) {
         this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
@@ -20,9 +20,33 @@ class MyNeonEffect extends Fx {
       this.raf = requestAnimationFrame(this.draw);
     }
 }
-const effect = new MyNeonEffect();
+const effect = new MyMouseEffect();
 effect.listenMouse();
 const CircleMouseTile = withNeon(Tile, effect);
+class MyHistoryEffect extends Fx {
+    draw() {
+      // If we have a canvas to draw on...
+      if (this.ctx!==null) {
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+        // Set the fill style to opaque white
+        this.ctx.fillStyle = 'hsla(0,100%,100%,0.25)';
+        // Draw a circle
+        if (this.history.length > 0) {
+          this.history.forEach((pos) => {
+            this.ctx.beginPath();
+            this.ctx.arc(pos[0], pos[1], 20, 0, 2 * Math.PI);
+            this.ctx.fill();
+          })
+        }
+      }
+      // Call the next frame
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+const historyEffect = new MyHistoryEffect();
+historyEffect.listenMouseHistory();
+const CircleHistoryTile = withNeon(Tile, historyEffect);
 
 ### Events - Mouse
 
@@ -66,3 +90,46 @@ export default class MyNeonEffect extends Fx {
 This gives us an effect like this. (Move your mouse over the effect to see it properly.)
 
 <CircleMouseTile />
+
+Sometimes a single mouse position isn't enough, and you want to get the history of the previous positions too. Neon gives you that functionality by enabling listenMouseHistory() and then you can use the this.history array in your effect.
+
+```javascript
+import Effect from './MyNeonEffect';
+const effect = new Effect();
+effect.listenMouseHistory();
+```
+
+The history is an array of mouse positions in the same format as this.mouse, [x, y].
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+    draw() {
+      // If we have a canvas to draw on...
+      if (this.ctx!==null) {
+        // Clear the canvas
+        this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+
+        // Set the fill style to 25% transparent white
+        this.ctx.fillStyle = 'hsla(0,100%,100%,0.25)';
+
+        // Draw a circle
+        this.history.each((pos) => {
+          this.ctx.beginPath();
+          this.ctx.arc(pos[0], pos[1], 20, 0, 2 * Math.PI);
+          this.ctx.fill();
+        })
+
+      }
+      // Call the next frame
+      this.raf = requestAnimationFrame(this.draw);
+    }
+}
+```
+
+Now the previous positions will be drawn as well.
+
+<CircleHistoryTile />
+
+Neon currently tracks the mouse forever, so the history array will fill up fast. It's worthwhile checking the length and trimming it if it gets too big, or your effect will eventually slow down a lot.
