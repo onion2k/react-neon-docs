@@ -106,23 +106,25 @@ The history is an array of mouse positions in the same format as this.mouse, [x,
 ```javascript
 import { Fx } from 'react-neon';
 
-export default class MyNeonEffect extends Fx {
+export default class MyHistoryEffect extends Fx {
     draw() {
       // If we have a canvas to draw on...
       if (this.ctx!==null) {
         // Clear the canvas
         this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
 
-        // Set the fill style to 25% transparent white
+        // Set the fill style to opaque white
         this.ctx.fillStyle = 'hsla(0,100%,100%,0.25)';
 
         // Draw a circle
-        this.history.each((pos) => {
-          this.ctx.beginPath();
-          this.ctx.arc(pos[0], pos[1], 20, 0, 2 * Math.PI);
-          this.ctx.fill();
-        })
-
+        if (this.history.length > 0) {
+          this.history.forEach((pos) => {
+            this.ctx.beginPath();
+            this.ctx.arc(pos[0], pos[1], 20, 0, 2 * Math.PI);
+            this.ctx.fill();
+          })
+        }
+        
       }
       // Call the next frame
       this.raf = requestAnimationFrame(this.draw);
