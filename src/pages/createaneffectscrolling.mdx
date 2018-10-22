@@ -2,10 +2,50 @@ export const frontmatter = {
   title: 'Events - Scrolling',
   author: 'Chris Neale',
   draft: false,
-  date: '2018-10-02T23:10:20.00Z',
+  date: '2018-10-02T23:10:30.00Z',
   tags: ['neon', 'effects']
 }
 
 ### Events - Scrolling
 
-Effect can react to the user scrolling the window. An example of this is used in the Fuzz effect that's bundled in the fx library.
+Effect can react to the user scrolling the window. An example of this is used in the Fuzz effect that's bundled in the fx library. Behind the scenes scrolling is monitored using the window scroll event.
+
+#### Initialising the scroll listener
+
+To listen to scroll events you need to enable the scroll listener using effect.listenScroll() when you initialise your effect.
+
+```javascript
+import Effect from './MyNeonEffect';
+const effect = new Effect();
+effect.listenScroll();
+```
+
+This will call this.scroll() in your effect whenever the scroll event fires.
+
+#### The scroll event
+
+The browser's scroll event includes a lot of information, but the bit we're most interested in is the scrollX and scrollY values.
+
+```javascript
+this.scrollPos = {
+  x: window.scrollX,
+  y: window.scrollY
+};
+```
+
+By putting the values in to a scrollPos object we can access them elsewhere in the effect.
+
+#### Scroll direction
+
+The window.scroll() event includes information about where the user has scrolled the window to on the x and y axis. However, while that's very useful, it doesn't include information about the previous position, so you need to maintain the scroll state yourself to find the direction of scrolling.
+
+```javascript
+this.scrollPos = { 
+  dx: this.scrollPos.x - window.scrollX,
+  dy: this.scrollPos.y - window.scrollY,
+  x: window.scrollX,
+  y: window.scrollY
+};
+```
+
+The scrollPos object now includes the x and y scroll positions, as well as the delta of the scroll position from the previous scroll event. This enables us to know if the users is scrolling up or down as well as where they scrolled to.
