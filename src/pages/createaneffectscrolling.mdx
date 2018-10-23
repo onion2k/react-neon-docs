@@ -6,6 +6,52 @@ export const frontmatter = {
   tags: ['neon', 'effects']
 }
 
+import Tile from "../components/Tile.js";
+import withNeon, { Fx } from "react-neon/dist/index.babel.js";
+class MyNeonEffect extends Fx {
+  init(){
+    this.scrollPos = { dx:0, dy: 0, x:0, y: 0 }
+    this.s = 0;
+  }
+  scroll() {
+    this.scrollPos = { 
+      dx: this.scrollPos.x - window.scrollX,
+      dy: this.scrollPos.y - window.scrollY,
+      x: window.scrollX,
+      y: window.scrollY
+    };
+    if (this.scrollPos.dy > 0) { this.s += 1; }
+    if (this.scrollPos.dy < 0) { this.s -= 1; }
+  }
+  draw() {
+    // If we have a canvas to draw on...
+    if (this.ctx!==null) {
+      // Clear the canvas
+      this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+      // Set the fill style to opaque white
+      this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+      let y1;
+      let y2;
+      if (this.scrollPos.dy < 0) {
+        y1 = 0;
+        y2 = this.bb.height / 2 - this.s;
+      } else {
+        y1 = this.bb.height / 2 - this.s;
+        y2 = this.bb.height;
+      }
+      // Draw a reactangle
+      this.ctx.beginPath();
+      this.ctx.rect(0, y1, this.bb.width, y2);
+      this.ctx.fill();
+    }
+    // Call the next frame
+    this.raf = requestAnimationFrame(this.draw);
+  }
+}
+const effect = new MyNeonEffect();
+effect.listenScroll();
+const ScrollTile = withNeon(Tile, effect);
+
 ### Events - Scrolling
 
 Effect can react to the user scrolling the window. An example of this is used in the Fuzz effect that's bundled in the fx library. Behind the scenes scrolling is monitored using the window scroll event.
@@ -49,3 +95,56 @@ this.scrollPos = {
 ```
 
 The scrollPos object now includes the x and y scroll positions, as well as the delta of the scroll position from the previous scroll event. This enables us to know if the users is scrolling up or down as well as where they scrolled to.
+
+#### Using scroll in an effect
+
+In this example effect the scroll value is used to mask part of the top or bottom of the component.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyNeonEffect extends Fx {
+  init(){
+    this.scrollPos = { dx:0, dy: 0, x:0, y: 0 }
+    this.s = 0;
+  }
+  scroll() {
+    this.scrollPos = { 
+      dx: this.scrollPos.x - window.scrollX,
+      dy: this.scrollPos.y - window.scrollY,
+      x: window.scrollX,
+      y: window.scrollY
+    };
+    if (this.scrollPos.dy > 0) { this.s += 1; }
+    if (this.scrollPos.dy < 0) { this.s -= 1; }
+  }
+  draw() {
+    // If we have a canvas to draw on...
+    if (this.ctx!==null) {
+      // Clear the canvas
+      this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+      // Set the fill style to opaque white
+      this.ctx.fillStyle = 'hsla(0,100%,100%,1)';
+      let y1;
+      let y2;
+      if (this.scrollPos.dy < 0) {
+        y1 = 0;
+        y2 = this.bb.height / 2 - this.s;
+      } else {
+        y1 = this.bb.height / 2 - this.s;
+        y2 = this.bb.height;
+      }
+      // Draw a reactangle
+      this.ctx.beginPath();
+      this.ctx.rect(0, y1, this.bb.width, y2);
+      this.ctx.fill();
+    }
+    // Call the next frame
+    this.raf = requestAnimationFrame(this.draw);
+  }
+}
+```
+
+<ScrollTile />
+
+This is a simple effect, and probably not one you'd ever actually want to use on a real page, but it demonstrates what can be done. To be honest, [Fuzz](/examples/fuzz) is better.
