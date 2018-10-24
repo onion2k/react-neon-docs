@@ -35,9 +35,17 @@
   margin-top: 30px;
 }
 
+.github-corner {
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0;
+}
+
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out;
 }
+
 @keyframes octocat-wave {
   0%,
   100% {
@@ -58,5 +66,31 @@
   }
   .github-corner .octo-arm {
     animation: octocat-wave 560ms ease-in-out;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .wrapper {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .main {
+    width: 100vw;
+    padding: 30px;
+    margin-right: 0px;
+    font-family: 'Source Sans Pro', 'Gill Sans', 'Gill Sans MT', Calibri,
+      'Trebuchet MS', sans-serif;
+    line-height: 1.5em;
+  }
+
+  .menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    left: -300px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 9999;
   }
 }

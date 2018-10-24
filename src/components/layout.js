@@ -39,11 +39,7 @@ const Layout = ({ children, location }) => (
             viewBox="0 0 250 250"
             style={{
               fill: '#151513',
-              color: '#fff',
-              position: 'absolute',
-              top: 0,
-              border: 0,
-              right: 0
+              color: '#fff'
             }}
             aria-hidden="true"
           >
@@ -59,6 +55,24 @@ const Layout = ({ children, location }) => (
               fill="currentColor"
               className="octo-body"
             />
+          </svg>
+        </a>
+        <a href="#" onClick={() => {}} className="menu-toggle">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 250 250"
+            style={{
+              fill: 'yellow',
+              color: '#fff',
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              transform: 'rotate(270deg)'
+            }}
+            aria-hidden="true"
+          >
+            <path d="M0,0 L115,115 L250,250 L250,0 Z" />
           </svg>
         </a>
         <div className="wrapper">
