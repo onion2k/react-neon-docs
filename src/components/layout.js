@@ -78,33 +78,9 @@ const Layout = ({ children, location }) => (
             aria-hidden="true"
           >
             <path d="M0,0 L250,0 L0,250 Z" />
-            <rect
-              x="20"
-              y="20"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
-            <rect
-              x="20"
-              y="50"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
-            <rect
-              x="20"
-              y="80"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
+            <rect x="20" y="20" width="100" height="20" fill="white" />
+            <rect x="20" y="50" width="100" height="20" fill="white" />
+            <rect x="20" y="80" width="100" height="20" fill="white" />
           </svg>
         </a>
         <div className="wrapper">

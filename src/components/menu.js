@@ -60,33 +60,9 @@ const Menu = () => (
             aria-hidden="true"
           >
             <path d="M0,0 L115,115 L250,250 L250,0 Z" />
-            <rect
-              x="120"
-              y="20"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
-            <rect
-              x="120"
-              y="50"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
-            <rect
-              x="120"
-              y="80"
-              width="100"
-              height="20"
-              rx="15"
-              ry="15"
-              fill="white"
-            />
+            <rect x="120" y="20" width="100" height="20" fill="white" />
+            <rect x="120" y="50" width="100" height="20" fill="white" />
+            <rect x="120" y="80" width="100" height="20" fill="white" />
           </svg>
         </a>
         <h3>React Neon</h3>
