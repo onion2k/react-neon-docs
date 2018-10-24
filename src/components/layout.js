@@ -57,22 +57,54 @@ const Layout = ({ children, location }) => (
             />
           </svg>
         </a>
-        <a href="#" onClick={() => {}} className="menu-toggle">
+        <a
+          href="#"
+          onClick={() => {
+            document.querySelector('.menu').classList.toggle('open')
+          }}
+          className="menu-toggle"
+        >
           <svg
             width="80"
             height="80"
             viewBox="0 0 250 250"
             style={{
-              fill: 'yellow',
+              fill: 'grey',
               color: '#fff',
               position: 'absolute',
               left: 0,
-              top: 0,
-              transform: 'rotate(270deg)'
+              top: 0
             }}
             aria-hidden="true"
           >
-            <path d="M0,0 L115,115 L250,250 L250,0 Z" />
+            <path d="M0,0 L250,0 L0,250 Z" />
+            <rect
+              x="20"
+              y="20"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
+            <rect
+              x="20"
+              y="50"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
+            <rect
+              x="20"
+              y="80"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
           </svg>
         </a>
         <div className="wrapper">

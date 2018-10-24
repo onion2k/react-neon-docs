@@ -39,6 +39,56 @@ const Menu = () => (
     `}
     render={data => (
       <div className="pages">
+        <a
+          href="#"
+          onClick={() => {
+            document.querySelector('.menu').classList.toggle('open')
+          }}
+          className="menu-toggle"
+        >
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 250 250"
+            style={{
+              fill: 'grey',
+              color: '#fff',
+              position: 'absolute',
+              right: 0,
+              top: 0
+            }}
+            aria-hidden="true"
+          >
+            <path d="M0,0 L115,115 L250,250 L250,0 Z" />
+            <rect
+              x="120"
+              y="20"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
+            <rect
+              x="120"
+              y="50"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
+            <rect
+              x="120"
+              y="80"
+              width="100"
+              height="20"
+              rx="15"
+              ry="15"
+              fill="white"
+            />
+          </svg>
+        </a>
         <h3>React Neon</h3>
         <ul>
           {data.allMdx.edges.map(({ node }) => {

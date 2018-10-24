@@ -35,6 +35,10 @@
   margin-top: 30px;
 }
 
+.menu-toggle {
+  display: none;
+}
+
 .github-corner {
   position: absolute;
   top: 0;
@@ -70,6 +74,10 @@
 }
 
 @media only screen and (max-width: 599px) {
+  .menu-toggle {
+    display: block;
+  }
+
   .wrapper {
     display: block;
     min-height: 100vh;
@@ -92,5 +100,9 @@
     left: -300px;
     transition: transform 0.3s ease-in-out;
     z-index: 9999;
+  }
+
+  .menu.open {
+    transform: translate(300px);
   }
 }
