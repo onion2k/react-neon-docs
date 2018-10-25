@@ -6,6 +6,33 @@ export const frontmatter = {
   tags: ['neon', 'effects']
 }
 
+import Tile from "../../components/Tile.js";
+import withNeon, { Fx } from "react-neon/dist/index.babel.js";
+class MyNeonEffect extends Fx {
+  init(){
+    this.intersection = 0;
+  }
+  intersect(c){
+    this.intersection =  1 - c[0].intersectionRatio;
+  }
+  draw() {
+    // If we have a canvas to draw on...
+    if (this.ctx!==null) {
+      // Clear the canvas
+      this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+      // Set the fill style to opaque white
+      this.ctx.fillStyle = 'hsla(0,100%,50%,'+this.intersection+')';
+      this.ctx.rect(0, 0, this.bb.width, this.bb.width);
+      this.ctx.fill();
+    }
+    // Call the next frame
+    this.raf = requestAnimationFrame(this.draw);
+  }
+}
+const effect = new MyNeonEffect();
+effect.listenIntersection();
+const IntersectionTile = withNeon(Tile, effect);
+
 ### Events - Intersection
 
 Intersections are a measure of how much an element on the page is visible within a viewing area. If the element is entirely outside of the area then the intersection is 0, and if it's entirely inside then the intersection is 1. Using a series of thresholds we can determine how much the element is inside the area. Using an IntersectionObserver we can make effects that change depending on how much of a component is visible.
@@ -35,3 +62,37 @@ intersect(c){
 ```
 
 The `c` parameter that intersect() takes holds a list of nodes on the page that the IntersectionObserver is watching. In Neon effects this will only ever hold one value in the first element of the array, so you'll only ever use c[0]. (This may change in future versions of Neon).
+
+The intersectionRatio value isn't just on or off. The IntersectionObserver has thresholds that return different values depending on how much of the component is visible. If it's half inside the viewing area then the value is set to 0.5. This means you can gradually introduce effects as a component scrolls in to view, and the opposite as it scrolls away.
+
+A simple effect can fade a layer over the component depending on how much of it is visible.
+
+```javascript
+import { Fx } from 'react-neon';
+
+export default class MyHistoryEffect extends Fx {
+  init(){
+    this.intersection = 0;
+  }
+  intersect(c){
+    this.intersection =  1 - c[0].intersectionRatio;
+  }
+  draw() {
+    // If we have a canvas to draw on...
+    if (this.ctx!==null) {
+      // Clear the canvas
+      this.ctx.clearRect(0, 0, this.bb.width, this.bb.height);
+      // Set the fill style to opaque red
+      this.ctx.fillStyle = 'hsla(0,100%,50%,'+this.intersection+')';
+      this.ctx.rect(0, 0, this.bb.width, this.bb.width);
+      this.ctx.fill();
+    }
+    // Call the next frame
+    this.raf = requestAnimationFrame(this.draw);
+  }
+}
+```
+
+<IntersectionTile mixmode="multiply" />
+
+NOTE: This effect is using the mixmode prop with a value of "multiply" to change the way it interacts with the component.
