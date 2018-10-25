@@ -1,7 +1,6 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import { Link } from 'gatsby'
-import { rhythm } from '../utils/typography'
 import './menu.css'
 
 const Menu = () => (
