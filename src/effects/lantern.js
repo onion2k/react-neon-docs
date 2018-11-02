@@ -37,11 +37,14 @@ export default class Lantern extends Fx {
     loader.load(
       model,
       gltf => {
-        this.cube = gltf.scene.children[0]
+        this.cube = new THREE.Mesh(
+          gltf.scene.children[0].geometry,
+          gltf.scene.children[0].material
+        )
         this.scene.add(this.cube)
 
         // this.cube.position.set(0, 0, 0);
-        // this.cube.scale.set(10, 10, 10);
+        this.cube.scale.set(10, 10, 10)
 
         // toScreenPosition(gltf.scene, this.camera);
       },
