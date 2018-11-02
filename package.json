@@ -34,6 +34,8 @@
     "react-neon": "^0.5.0",
     "react-typography": "^0.16.13",
     "styled-components": "^3.4.9",
+    "three": "^0.98.0",
+    "three-gltf-loader": "^1.97.0",
     "twgl.js": "^4.5.2",
     "typography": "^0.16.17"
   },
