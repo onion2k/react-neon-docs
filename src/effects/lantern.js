@@ -19,7 +19,7 @@ export default class Lantern extends Fx {
       0.1,
       1000
     )
-    this.camera.position.z = 20
+    this.camera.position.z = 15
 
     let geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
     let material = new THREE.MeshBasicMaterial({ color: 0xffffff })
@@ -37,10 +37,13 @@ export default class Lantern extends Fx {
     loader.load(
       model,
       gltf => {
-        // this.cube = gltf.scene;
-        gltf.scene.scale.set(10, 10, 10)
-        gltf.scene.position.set(0, -15, 0)
-        this.scene.add(gltf.scene)
+        this.cube = gltf.scene.children[0]
+        this.scene.add(this.cube)
+
+        // this.cube.position.set(0, 0, 0);
+        // this.cube.scale.set(10, 10, 10);
+
+        // toScreenPosition(gltf.scene, this.camera);
       },
       undefined,
       error => {
@@ -52,14 +55,14 @@ export default class Lantern extends Fx {
       canvas: this.ctx.canvas,
       antialias: true
     })
+    this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(this.bb.width, this.bb.height)
   }
 
   draw() {
     this.renderer.render(this.scene, this.camera)
 
-    // this.cube.rotation.x += 0.01;
-    // this.cube.rotation.y += 0.01;
+    this.cube.rotation.y += 0.01
 
     this.raf = requestAnimationFrame(this.draw)
   }
