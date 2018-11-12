@@ -3,6 +3,31 @@ import * as THREE from 'three'
 import GLTFLoader from 'three-gltf-loader'
 import { withPrefix } from 'gatsby'
 
+function screenToWorld(cam, position, bb) {
+  var vPos = new THREE.Vector3() // create once and reuse
+  var pos = new THREE.Vector3() // create once and reuse
+
+  vPos
+    .set(
+      -1.0 + (2.0 * position.x) / bb.width,
+      -1.0 + (2.0 * position.y) / bb.height,
+      0.5
+    )
+    .unproject(cam)
+
+  // Calculate a unit vector from the camera to the projected position
+  pos
+    .copy(vPos)
+    .sub(cam.position)
+    .normalize()
+
+  // Project onto z=0
+  let flDistance = -cam.position.z / pos.z
+  pos.copy(cam.position).add(pos.multiplyScalar(flDistance))
+
+  return pos
+}
+
 /**
  *
  * Basic particles radiating from the user's mouse, with more when the user clicks.
@@ -38,34 +63,36 @@ export default class Lantern extends Fx {
     const sphere_colors = [
       new THREE.MeshStandardMaterial({
         color: 0xffff00,
-        shading: THREE.FlatShading
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff00ff,
-        shading: THREE.FlatShading
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0x00ffff,
-        shading: THREE.FlatShading
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff0000,
-        shading: THREE.FlatShading
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0x00ff00,
-        shading: THREE.FlatShading
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0x0000ff,
-        shading: THREE.FlatShading
+        flatShading: true
       })
     ]
     for (let x = 0; x < 24; x++) {
       this.fairylights.push(
         new THREE.Mesh(sphere_geometry, sphere_colors[x % sphere_colors.length])
       )
-      this.fairylights[x].position.set(Math.floor(x / 6) - 4, (x % 6) - 4, 0)
+      let pos = screenToWorld(this.camera, { x: 0, y: 0 }, this.bb)
+      this.fairylights[x].position.set(pos.x, pos.y, pos.z)
+      // this.fairylights[x].position.set(Math.floor(x / 6) - 4, (x % 6) - 4, -5);
       this.scene.add(this.fairylights[x])
     }
 
