@@ -21,9 +21,9 @@ export default class Lantern extends Fx {
     )
     this.camera.position.z = 15
 
-    let geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
-    let material = new THREE.MeshBasicMaterial({ color: 0xffffff })
-    this.cube = new THREE.Mesh(geometry, material)
+    let box_geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+    let box_material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+    this.cube = new THREE.Mesh(box_geometry, box_material)
     this.cube.position.set(5, 5, 0)
     this.scene.add(this.cube)
 
@@ -31,28 +31,66 @@ export default class Lantern extends Fx {
     light.position.set(5, 5, 0)
     this.scene.add(light)
 
-    const loader = new GLTFLoader()
-    const model = withPrefix('model.gltf')
+    const sphere_geometry = new THREE.SphereGeometry(0.5, 12, 12)
 
-    loader.load(
-      model,
-      gltf => {
-        this.cube = new THREE.Mesh(
-          gltf.scene.children[0].geometry,
-          gltf.scene.children[0].material
-        )
-        this.scene.add(this.cube)
+    this.fairylights = []
 
-        // this.cube.position.set(0, 0, 0);
-        this.cube.scale.set(10, 10, 10)
+    const sphere_colors = [
+      new THREE.MeshStandardMaterial({
+        color: 0xffff00,
+        shading: THREE.FlatShading
+      }),
+      new THREE.MeshStandardMaterial({
+        color: 0xff00ff,
+        shading: THREE.FlatShading
+      }),
+      new THREE.MeshStandardMaterial({
+        color: 0x00ffff,
+        shading: THREE.FlatShading
+      }),
+      new THREE.MeshStandardMaterial({
+        color: 0xff0000,
+        shading: THREE.FlatShading
+      }),
+      new THREE.MeshStandardMaterial({
+        color: 0x00ff00,
+        shading: THREE.FlatShading
+      }),
+      new THREE.MeshStandardMaterial({
+        color: 0x0000ff,
+        shading: THREE.FlatShading
+      })
+    ]
+    for (let x = 0; x < 24; x++) {
+      this.fairylights.push(
+        new THREE.Mesh(sphere_geometry, sphere_colors[x % sphere_colors.length])
+      )
+      this.fairylights[x].position.set(Math.floor(x / 6) - 4, (x % 6) - 4, 0)
+      this.scene.add(this.fairylights[x])
+    }
 
-        // toScreenPosition(gltf.scene, this.camera);
-      },
-      undefined,
-      error => {
-        // console.error(error);
-      }
-    )
+    // const loader = new GLTFLoader();
+    // const model = withPrefix('model.gltf');
+
+    // loader.load(
+    //   model,
+    //   gltf => {
+    //     this.cube = new THREE.Mesh(
+    //       gltf.scene.children[0].geometry,
+    //       gltf.scene.children[0].material
+    //     )
+    //     this.scene.add(this.cube)
+
+    //     // this.cube.position.set(0, 0, 0);
+    //     this.cube.scale.set(10, 10, 10)
+
+    //     // toScreenPosition(gltf.scene, this.camera);
+    //   },
+    //   undefined,
+    //   error => {
+    //     // console.error(error);
+    //   }
+    // )
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.ctx.canvas,
@@ -65,7 +103,10 @@ export default class Lantern extends Fx {
   draw() {
     this.renderer.render(this.scene, this.camera)
 
-    this.cube.rotation.y += 0.01
+    this.fairylights.forEach(f => {
+      f.rotation.x += 0.01
+      f.rotation.z += 0.01
+    })
 
     this.raf = requestAnimationFrame(this.draw)
   }
