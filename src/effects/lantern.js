@@ -23,9 +23,15 @@ export default class Lantern extends Fx {
   context = 'webgl'
 
   init() {
+    this.fairylights = []
+
+    this.addFairyLight.bind(this)
+    this.initGeometry.bind(this)
+    this.initGeometry()
+
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(
-      75,
+      45,
       this.bb.width / this.bb.height,
       0.1,
       1000
@@ -42,22 +48,63 @@ export default class Lantern extends Fx {
     light.position.set(5, 5, 0)
     this.scene.add(light)
 
-    const sphere_geometry = new THREE.SphereGeometry(0.5, 12, 12)
+    const w = this.bb.width
+    const h = this.bb.height
+    const p = this.options.padding
 
-    this.fairylights = []
+    for (let x = 0; x < 8; x++) {
+      let px = ((p + (x % 8) * ((w - p * 2) / 7)) / w) * 2 - 1
+      let py = ((p + 0 * ((h - p * 2) / 7)) / h) * 2 - 1
 
-    const sphere_colors = [
+      this.addFairyLight(x, px, py)
+    }
+
+    for (let x = 8; x < 16; x++) {
+      let px = ((p + (x % 8) * ((w - p * 2) / 7)) / w) * 2 - 1
+
+      let py = ((p + 7 * ((h - p * 2) / 7)) / h) * 2 - 1
+
+      this.addFairyLight(x, px, py)
+    }
+
+    for (let x = 16; x < 22; x++) {
+      let px = ((p + 0 * ((w - p * 2) / 7)) / w) * 2 - 1
+
+      let py = ((p + ((x + 1) % 8) * ((h - p * 2) / 7)) / h) * 2 - 1
+
+      this.addFairyLight(x, px, py)
+    }
+
+    for (let x = 22; x < 28; x++) {
+      let px = ((p + 7 * ((w - p * 2) / 7)) / w) * 2 - 1
+
+      let py = ((p + ((x + 3) % 8) * ((h - p * 2) / 7)) / h) * 2 - 1
+
+      this.addFairyLight(x, px, py)
+    }
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: this.ctx.canvas,
+      antialias: true
+    })
+    this.renderer.setPixelRatio(window.devicePixelRatio)
+    this.renderer.setSize(this.bb.width, this.bb.height)
+  }
+
+  initGeometry() {
+    this.sphere_geometry = new THREE.SphereGeometry(0.5, 12, 12)
+    this.sphere_colors = [
       new THREE.MeshStandardMaterial({
         color: 0xffff00,
-        flatShading: false
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff00ff,
-        flatShading: false
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0x00ffff,
-        flatShading: false
+        flatShading: true
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff0000,
@@ -72,31 +119,20 @@ export default class Lantern extends Fx {
         flatShading: true
       })
     ]
-    for (let x = 0; x < 24; x++) {
-      this.fairylights.push(
-        new THREE.Mesh(sphere_geometry, sphere_colors[x % sphere_colors.length])
+  }
+
+  addFairyLight(x, px, py) {
+    this.fairylights.push(
+      new THREE.Mesh(
+        this.sphere_geometry,
+        this.sphere_colors[x % this.sphere_colors.length]
       )
+    )
 
-      let px =
-        ((50 + Math.floor(x / 8) * ((this.bb.width - 100) / 7)) /
-          this.bb.width) *
-          2 -
-        1
-      let py =
-        ((50 + (x % 8) * ((this.bb.height - 100) / 7)) / this.bb.height) * 2 - 1
+    let pos = screenToWorld(new THREE.Vector3(px, py, -15), this.camera)
 
-      let pos = screenToWorld(new THREE.Vector3(px, py, -10), this.camera)
-
-      this.fairylights[x].position.set(pos.x, pos.y, pos.z)
-      this.scene.add(this.fairylights[x])
-    }
-
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.ctx.canvas,
-      antialias: true
-    })
-    this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setSize(this.bb.width, this.bb.height)
+    this.fairylights[x].position.set(pos.x, pos.y, pos.z)
+    this.scene.add(this.fairylights[x])
   }
 
   draw() {
