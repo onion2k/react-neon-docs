@@ -26,8 +26,8 @@ export default class Lantern extends Fx {
     this.fairylights = []
 
     this.addFairyLight.bind(this)
-    this.initGeometry.bind(this)
     this.initGeometry()
+    this.initColors()
 
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(
@@ -55,31 +55,24 @@ export default class Lantern extends Fx {
     for (let x = 0; x < 8; x++) {
       let px = ((p + (x % 8) * ((w - p * 2) / 7)) / w) * 2 - 1
       let py = ((p + 0 * ((h - p * 2) / 7)) / h) * 2 - 1
-
       this.addFairyLight(x, px, py)
     }
 
     for (let x = 8; x < 16; x++) {
       let px = ((p + (x % 8) * ((w - p * 2) / 7)) / w) * 2 - 1
-
       let py = ((p + 7 * ((h - p * 2) / 7)) / h) * 2 - 1
-
       this.addFairyLight(x, px, py)
     }
 
     for (let x = 16; x < 22; x++) {
       let px = ((p + 0 * ((w - p * 2) / 7)) / w) * 2 - 1
-
       let py = ((p + ((x + 1) % 8) * ((h - p * 2) / 7)) / h) * 2 - 1
-
       this.addFairyLight(x, px, py)
     }
 
     for (let x = 22; x < 28; x++) {
       let px = ((p + 7 * ((w - p * 2) / 7)) / w) * 2 - 1
-
       let py = ((p + ((x + 3) % 8) * ((h - p * 2) / 7)) / h) * 2 - 1
-
       this.addFairyLight(x, px, py)
     }
 
@@ -93,6 +86,9 @@ export default class Lantern extends Fx {
 
   initGeometry() {
     this.sphere_geometry = new THREE.SphereGeometry(0.5, 12, 12)
+  }
+
+  initColors() {
     this.sphere_colors = [
       new THREE.MeshStandardMaterial({
         color: 0xffff00,
