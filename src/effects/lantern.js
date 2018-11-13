@@ -49,15 +49,15 @@ export default class Lantern extends Fx {
     const sphere_colors = [
       new THREE.MeshStandardMaterial({
         color: 0xffff00,
-        flatShading: true
+        flatShading: false
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff00ff,
-        flatShading: true
+        flatShading: false
       }),
       new THREE.MeshStandardMaterial({
         color: 0x00ffff,
-        flatShading: true
+        flatShading: false
       }),
       new THREE.MeshStandardMaterial({
         color: 0xff0000,
