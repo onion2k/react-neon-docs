@@ -1,8 +1,8 @@
 import react from 'react';
-import Lantern from '../effects/lantern';
+import Fairy from '../effects/fairy';
 
 export const frontmatter = {
-  title: 'Lantern',
+  title: 'Fairy Lights with three.js',
   author: 'Chris Neale',
   draft: true,
   date: '2016-09-03T23:46:37.121Z',
@@ -11,9 +11,9 @@ export const frontmatter = {
 
 import Tile from "../components/Tile.js";
 import withNeon from "react-neon";
-const effect = new Lantern({ padding: 50 });
-const LanternTile = withNeon(Tile, effect);
+const effect = new Fairy({ padding: 50 });
+const FairyTile = withNeon(Tile, effect);
 
-### Lantern Example
+### Fairy Example
 
-<LanternTile />
+<FairyTile />
