@@ -1,7 +1,5 @@
 import { Fx } from 'react-neon/dist/index.babel.js'
 import * as THREE from 'three'
-import GLTFLoader from 'three-gltf-loader'
-import { withPrefix } from 'gatsby'
 
 //input THREE.Vector3
 function screenToWorld(position, cam) {
@@ -74,43 +72,24 @@ export default class Lantern extends Fx {
         flatShading: true
       })
     ]
-    for (let x = 0; x < 2; x++) {
+    for (let x = 0; x < 24; x++) {
       this.fairylights.push(
         new THREE.Mesh(sphere_geometry, sphere_colors[x % sphere_colors.length])
       )
 
-      let px = ((x * 100) / this.bb.width) * 2 - 1
+      let px =
+        ((50 + Math.floor(x / 8) * ((this.bb.width - 100) / 7)) /
+          this.bb.width) *
+          2 -
+        1
+      let py =
+        ((50 + (x % 8) * ((this.bb.height - 100) / 7)) / this.bb.height) * 2 - 1
 
-      let pos = new THREE.Vector3(px, 1, -10)
-      screenToWorld(pos, this.camera)
+      let pos = screenToWorld(new THREE.Vector3(px, py, -10), this.camera)
 
       this.fairylights[x].position.set(pos.x, pos.y, pos.z)
-      // this.fairylights[x].position.set(Math.floor(x / 6) - 4, (x % 6) - 4, -5);
       this.scene.add(this.fairylights[x])
     }
-
-    // const loader = new GLTFLoader();
-    // const model = withPrefix('model.gltf');
-
-    // loader.load(
-    //   model,
-    //   gltf => {
-    //     this.cube = new THREE.Mesh(
-    //       gltf.scene.children[0].geometry,
-    //       gltf.scene.children[0].material
-    //     )
-    //     this.scene.add(this.cube)
-
-    //     // this.cube.position.set(0, 0, 0);
-    //     this.cube.scale.set(10, 10, 10)
-
-    //     // toScreenPosition(gltf.scene, this.camera);
-    //   },
-    //   undefined,
-    //   error => {
-    //     // console.error(error);
-    //   }
-    // )
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.ctx.canvas,
