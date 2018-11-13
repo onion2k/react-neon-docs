@@ -3,29 +3,17 @@ import * as THREE from 'three'
 import GLTFLoader from 'three-gltf-loader'
 import { withPrefix } from 'gatsby'
 
-function screenToWorld(cam, position, bb) {
-  var vPos = new THREE.Vector3() // create once and reuse
-  var pos = new THREE.Vector3() // create once and reuse
-
-  vPos
-    .set(
-      -1.0 + (2.0 * position.x) / bb.width,
-      -1.0 + (2.0 * position.y) / bb.height,
-      0.5
-    )
-    .unproject(cam)
-
-  // Calculate a unit vector from the camera to the projected position
-  pos
-    .copy(vPos)
-    .sub(cam.position)
-    .normalize()
-
-  // Project onto z=0
-  let flDistance = -cam.position.z / pos.z
-  pos.copy(cam.position).add(pos.multiplyScalar(flDistance))
-
-  return pos
+//input THREE.Vector3
+function screenToWorld(position, cam) {
+  var z = position.z
+  position.z = 0
+  position.unproject(cam)
+  return cam.position.clone().add(
+    position
+      .sub(cam.position)
+      .normalize()
+      .multiplyScalar(-(cam.position.z - z) / position.z)
+  )
 }
 
 /**
@@ -44,7 +32,7 @@ export default class Lantern extends Fx {
       0.1,
       1000
     )
-    this.camera.position.z = 15
+    this.camera.position.z = 0
 
     let box_geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
     let box_material = new THREE.MeshBasicMaterial({ color: 0xffffff })
@@ -86,11 +74,16 @@ export default class Lantern extends Fx {
         flatShading: true
       })
     ]
-    for (let x = 0; x < 24; x++) {
+    for (let x = 0; x < 2; x++) {
       this.fairylights.push(
         new THREE.Mesh(sphere_geometry, sphere_colors[x % sphere_colors.length])
       )
-      let pos = screenToWorld(this.camera, { x: 0, y: 0 }, this.bb)
+
+      let px = ((x * 100) / this.bb.width) * 2 - 1
+
+      let pos = new THREE.Vector3(px, 1, -10)
+      screenToWorld(pos, this.camera)
+
       this.fairylights[x].position.set(pos.x, pos.y, pos.z)
       // this.fairylights[x].position.set(Math.floor(x / 6) - 4, (x % 6) - 4, -5);
       this.scene.add(this.fairylights[x])
