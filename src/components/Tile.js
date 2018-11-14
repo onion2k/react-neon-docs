@@ -5,7 +5,7 @@ class Tile extends React.Component {
   render() {
     let { children, className } = this.props
 
-    className += ' Tile'
+    className = className ? className + ' Tile' : 'Tile'
 
     return (
       <div

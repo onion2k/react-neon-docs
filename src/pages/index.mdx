@@ -1,0 +1,41 @@
+import react from 'react';
+import Grid from '../components/grid';
+import Sale from '../effects/sale';
+
+export const frontmatter = {
+  title: 'React Neon',
+  author: 'Chris Neale',
+  draft: true,
+  date: '2016-09-03T23:46:37.121Z',
+  tags: ['effects']
+}
+
+import Tile from "../components/Tile.js";
+import withNeon, { fx } from "react-neon";
+const effectNeon = new fx.Neon({ size: 10 });
+const NeonTile = withNeon(Tile, effectNeon);
+const effectSale = new Sale();
+const SaleTile = withNeon(Tile, effectSale);
+const effectTorch = new fx.Torch();
+effectTorch.listenMouse();
+const TorchTile = withNeon(Tile, effectTorch);
+
+
+### Welcome to React Neon
+
+React Neon is a 'post-processing image layer' for React components. 
+
+<Grid>
+    <NeonTile />
+    <SaleTile />
+    <TorchTile />
+</Grid>
+
+Import the library and the effects, and use a High Order Component to add a canvas layer to your component.
+
+```javascript
+const myComponent = () => ( <div>My Component</div> );
+const effect = new neon.fx.Neon({ size: 10 });
+
+export default neon.default(myComponent, effect);
+```

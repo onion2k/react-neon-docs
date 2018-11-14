@@ -1,7 +1,7 @@
 div.Tile {
   background-size: cover;
-  width: 25vw;
-  height: 25vw;
+  width: 20vmin;
+  height: 20vmin;
   display: grid;
   margin: 0 auto;
 }
