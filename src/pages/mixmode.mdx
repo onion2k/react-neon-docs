@@ -1,0 +1,82 @@
+export const frontmatter = {
+  title: 'Blending Mixmodes',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-10-03T23:00:00.00Z',
+  tags: ['neon', 'effects']
+}
+
+import Grid from '../components/grid';
+import Tile from "../components/Tile.js";
+import withNeon, { fx } from "react-neon";
+const vs = `
+  attribute vec4 position;
+  void main() {
+    gl_Position = position;
+  }
+`;
+const fs = `
+  #ifdef GL_ES
+  precision mediump float;
+  #endif
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  void main()
+  {
+      vec2 uv = gl_FragCoord.xy / u_resolution;
+      uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
+      float cb = floor(uv.x*25.) + floor(uv.y*25.);
+      gl_FragColor = vec4(0.5, 0.5, 0.5, 1.0 * mod(cb, 2.0));
+  }
+`
+const tiles = [];
+let NormalTileA = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileB = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileC = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileD = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileE = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileF = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileG = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileH = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileI = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileJ = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileK = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileL = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileM = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileN = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileO = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+let NormalTileP = withNeon(Tile, new fx.Shader({ vs: vs, fs: fs }));
+
+### Blending Mixmodes
+
+React Neon takes a mixmode prop to control how the effect layer is combined with the component (using CSS's mix-blend-mode property). Eg.
+
+```javascript
+import withNeon, { fx } from 'react-neon';
+import ShoppingList from './ShoppingList';
+const SnowEffect = new fx.Snow({ size: 10 });
+const SnowShoppingList = withNeon(ShoppingList, SnowEffect);
+
+<SnowShoppingList mixmode="screen" />
+```
+
+The available mixmode values are;
+
+<Grid>
+  <div className="Caption"><NormalTileA />normal</div>
+  <div className="Caption"><NormalTileB mixmode="multiply" />multiply</div>
+  <div className="Caption"><NormalTileC mixmode="screen" />screen</div>
+  <div className="Caption"><NormalTileD mixmode="overlay" />overlay</div>
+  <div className="Caption"><NormalTileE mixmode="darken" />darker</div>
+  <div className="Caption"><NormalTileF mixmode="lighten" />lighten</div>
+  <div className="Caption"><NormalTileG mixmode="color-dodge" />color-dodge</div>
+  <div className="Caption"><NormalTileH mixmode="color-burn" />color-burn</div>
+  <div className="Caption"><NormalTileI mixmode="hard-light" />hard-light</div>
+  <div className="Caption"><NormalTileJ mixmode="soft-light" />soft-light</div>
+  <div className="Caption"><NormalTileK mixmode="difference" />difference</div>
+  <div className="Caption"><NormalTileL mixmode="exclusion" />exclusion</div>
+  <div className="Caption"><NormalTileM mixmode="hue" />hue</div>
+  <div className="Caption"><NormalTileN mixmode="saturation" />saturation</div>
+  <div className="Caption"><NormalTileO mixmode="color" />color</div>
+  <div className="Caption"><NormalTileP mixmode="luminosity" />luminosity</div>
+</Grid>

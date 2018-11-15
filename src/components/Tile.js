@@ -21,6 +21,22 @@ class Tile extends React.Component {
   }
 }
 
+class CaptionedTile extends React.Component {
+  render() {
+    let { caption } = this.props
+    return (
+      <div className="CaptionedTile">
+        <Tile
+          bgIm={`https://source.unsplash.com/random?r=${Math.floor(
+            Math.random() * 10000
+          )}`}
+        />
+        {caption}
+      </div>
+    )
+  }
+}
+
 class ImgTile extends React.Component {
   render() {
     return (
@@ -33,4 +49,4 @@ class ImgTile extends React.Component {
   }
 }
 
-export { ImgTile as default, Tile }
+export { ImgTile as default, CaptionedTile, Tile }

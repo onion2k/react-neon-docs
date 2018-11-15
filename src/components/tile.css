@@ -25,3 +25,7 @@ div.outer {
   align-items: center;
   justify-items: center;
 }
+
+div.Caption {
+  text-align: center;
+}
