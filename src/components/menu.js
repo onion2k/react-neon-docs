@@ -64,7 +64,9 @@ const Menu = () => (
             <rect x="120" y="80" width="100" height="20" fill="white" />
           </svg>
         </a>
-        <h3>React Neon</h3>
+        <h3>
+          <Link to={`/`}>React Neon</Link>
+        </h3>
         <ul>
           {data.allMdx.edges.map(({ node }) => {
             return (

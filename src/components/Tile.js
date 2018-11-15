@@ -23,7 +23,13 @@ class Tile extends React.Component {
 
 class ImgTile extends React.Component {
   render() {
-    return <Tile bgIm="https://source.unsplash.com/featured/?night" />
+    return (
+      <Tile
+        bgIm={`https://source.unsplash.com/random?r=${Math.floor(
+          Math.random() * 10000
+        )}`}
+      />
+    )
   }
 }
 
