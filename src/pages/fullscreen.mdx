@@ -9,9 +9,9 @@ export const frontmatter = {
 }
 
 import withNeon, { fx } from "react-neon";
-const Empty = () => (<div style={{ height: 1, overflow: "hidden" }}>Fullscreen Snow</div>);
+import Tile from "../components/Tile.js";
 const effect = new fx.Snow({ fullscreen: true });
-const FullscreenSnow = withNeon(Empty, effect);
+const FullscreenSnow = withNeon(Tile, effect);
 
 ### Full Screen Example
 
@@ -25,7 +25,7 @@ In the example code below a div has been passed in for the ResizeObserver to lis
 
 ```javascript
   import withNeon, { fx } from "react-neon";
-  const Empty = () => (<div style={{ height: 1, overflow: "hidden" }}>Fullscreen Snow</div>);
+  import Tile from "../components/Tile.js";
   const effect = new fx.Snow({ fullscreen: true });
-  const FullscreenSnow = withNeon(Empty, effect);
+  const FullscreenSnow = withNeon(Tile, effect);
 ```
