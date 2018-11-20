@@ -1,7 +1,7 @@
 import react from 'react';
 
 export const frontmatter = {
-  title: 'Fullscreen Mode',
+  title: 'Fullscreen Snow',
   author: 'Chris Neale',
   draft: false,
   date: '2018-10-03T23:40:00.00Z',
@@ -9,7 +9,7 @@ export const frontmatter = {
 }
 
 import withNeon, { fx } from "react-neon";
-import Tile from "../components/Tile.js";
+import Tile from "../../components/Tile.js";
 const effect = new fx.Snow({ fullscreen: true });
 const FullscreenSnow = withNeon(Tile, effect);
 

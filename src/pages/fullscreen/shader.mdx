@@ -1,0 +1,71 @@
+import react from 'react';
+
+export const frontmatter = {
+  title: 'Fullscreen Shader',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-10-03T23:40:00.00Z',
+  tags: ['effects']
+}
+
+import withNeon, { fx } from "react-neon";
+import Tile from "../../components/Tile.js";
+const vs = `
+  attribute vec4 position;
+  void main() {
+    gl_Position = position;
+  }
+`;
+const fs = `
+  #ifdef GL_ES
+  precision mediump float;
+  #endif
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  void main()
+  {
+      vec2 uv = gl_FragCoord.xy / u_resolution;
+      uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
+      float cb = floor(uv.x*25.) + floor(uv.y*25.);
+      gl_FragColor = vec4(0.0, 0.0, 0.0, 0.25 * mod(cb, 2.0));
+  }
+`
+const effect = new fx.Shader({ fullscreen: true, vs: vs, fs: fs });
+const FullscreenShader = withNeon(Tile, effect);
+
+### Fullscreen Shader
+
+React Neon fullscreen effects by passing an option of 'fullscreen' that's set to true. This will attach the effect to the top left of the screen and set it's dimensions to match the page.
+
+<FullscreenShader mixmode="multiply" />
+
+In the example code below an image Tile component has been used for the ResizeObserver to listen to, but the effect could be attached to a real component in a proper app or website.
+
+### Example Code
+
+```javascript
+    import withNeon, { fx } from "react-neon";
+    import Tile from "../components/Tile.js";
+    const vs = `
+        attribute vec4 position;
+        void main() {
+            gl_Position = position;
+        }
+    `;
+    const fs = `
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        void main()
+        {
+            vec2 uv = gl_FragCoord.xy / u_resolution;
+            uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
+            float cb = floor(uv.x*25.) + floor(uv.y*25.);
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 0.25 * mod(cb, 2.0));
+        }
+    `
+    const effect = new fx.Shader({ fullscreen: true, vs: vs, fs: fs });
+    const FullscreenSnow = withNeon(Tile, effect);
+```
