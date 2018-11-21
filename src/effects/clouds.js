@@ -1,4 +1,5 @@
 import { fx } from 'react-neon/dist/index.babel.js'
+import noise from '../static/rgbnoise.png'
 
 const vs = `
   attribute vec4 position;
@@ -14,14 +15,14 @@ const fs = `
     uniform vec2 u_resolution;
     uniform float u_time;
     uniform vec2 u_mouse;
-    uniform iChannel0;
+    uniform sampler2D u_channel0;
     float noise( in vec3 x )
     {
         vec3 p = floor(x);
         vec3 f = fract(x);
         f = f*f*(3.0-2.0*f);
         vec2 uv = (p.xy+vec2(37.0,17.0)*p.z) + f.xy;
-        vec2 rg = texture2D( iChannel0, (uv+ 0.5)/256.0, -100.0 ).yx;
+        vec2 rg = texture2D( u_channel0, (uv+ 0.5)/256.0, -100.0 ).yx;
         return -1.0+2.0*mix( rg.x, rg.y, f.z );
     }
 
@@ -109,8 +110,10 @@ const fs = `
     {
         // background sky
         float sun = clamp( dot(sundir,rd), 0.0, 1.0 );
-        vec3 col = vec3(0.6,0.71,0.75) - rd.y*0.2*vec3(1.0,0.5,1.0) + 0.15*0.5;
-        col += 0.2*vec3(1.0,.6,0.1)*pow( sun, 8.0 );
+        vec3 sky = vec3(0.6,0.71,0.75) - rd.y*0.2*vec3(1.0,0.5,1.0) + 0.15*0.5;
+        sky += 0.2*vec3(1.0,.6,0.1)*pow( sun, 8.0 );
+
+        vec3 col = vec3(0.);
 
         // clouds    
         vec4 res = raymarch( ro, rd, col );
@@ -119,7 +122,7 @@ const fs = `
         // sun glare    
         col += 0.2*vec3(1.0,0.4,0.2)*pow( sun, 3.0 );
 
-        return vec4( col, 1.0 );
+        return vec4( col, sky.r );
     }
 
     void mainImage( out vec4 fragColor, in vec2 fragCoord )
@@ -142,6 +145,22 @@ const fs = `
     {
         fragColor = render( fragRayOri, fragRayDir );
     }
+
+    void main()
+    {
+        vec2 p = (-u_resolution.xy + 2.0*gl_FragCoord.xy)/ u_resolution.y;
+
+        vec2 m = u_mouse.xy/u_resolution.xy;
+        
+        // camera
+        vec3 ro = 4.0*normalize(vec3(sin(3.0*m.x), 0.4*m.y, cos(3.0*m.x)));
+        vec3 ta = vec3(0.0, -1.0, 0.0);
+        mat3 ca = setCamera( ro, ta, 0.0 );
+        // ray
+        vec3 rd = ca * normalize( vec3(p.xy,1.5));
+        
+        gl_FragColor = render( ro, rd );
+    }
 `
 
-export default new fx.Shader({ fullscreen: true, vs: vs, fs: fs })
+export default new fx.Shader({ vs: vs, fs: fs, tex: noise })
