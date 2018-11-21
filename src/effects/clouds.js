@@ -1,5 +1,5 @@
 import { fx } from 'react-neon/dist/index.babel.js'
-import noise from '../static/rgbnoise.png'
+import noise from './rgbnoise.png'
 
 const vs = `
   attribute vec4 position;
@@ -163,4 +163,4 @@ const fs = `
     }
 `
 
-export default new fx.Shader({ vs: vs, fs: fs, tex: noise })
+export default new fx.Shader({ vs: vs, fs: fs, tex: noise, fullscreen: true })

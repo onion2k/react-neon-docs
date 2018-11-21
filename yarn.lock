@@ -11172,10 +11172,10 @@ react-live@^1.11.0:
     prop-types "^15.5.8"
     unescape "^0.2.0"
 
-react-neon@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.6.1.tgz#4f529f22777f3336077e7259834b01f6d0ca52bc"
-  integrity sha512-DBJloUQaCBql0Qm9GPVastkpyOmQlVCf+lmLPeFtds4lsyf9uGHzzUy5FO1EvRag1yrkr4VhSLbMUoOYI3+75Q==
+react-neon@^0.6.2:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.6.3.tgz#8c362b4da91b7b2726944ab0c65138d9f3e60fbd"
+  integrity sha512-muIozsyY64Fkz8H2MIJZFzO6w/lv+yvxmoecQdqLYX5qt243rJstNK1EKNPGaaDUysTXEn20po2K53vq4Rd0fQ==
   dependencies:
     "@babel/plugin-transform-modules-umd" "^7.1.0"
     babel-plugin-add-module-exports "^1.0.0"
