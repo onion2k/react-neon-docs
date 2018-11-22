@@ -1,16 +1,16 @@
 import react from 'react';
 
 export const frontmatter = {
-  title: 'Fullscreen Clouds',
+  title: 'Clouds',
   author: 'Chris Neale',
   draft: false,
   date: '2018-10-03T23:40:00.00Z',
-  tags: ['effects']
+  tags: ['fullscreen']
 }
 
 import withNeon from "react-neon";
 import Tile from "../../components/Tile.js";
-import effect from "../../effects/clouds.js";
+import effect from "../../effects/cloudsfs.js";
 const CloudShader = withNeon(Tile, effect);
 
 ### Fullscreen Shader

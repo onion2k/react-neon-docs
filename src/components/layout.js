@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import Menu from './menu'
 import Effects from './effects'
+import Fullscreen from './fullscreen'
 import './layout.css'
 
 const Layout = ({ children, location }) => (
@@ -87,6 +88,7 @@ const Layout = ({ children, location }) => (
           <div className="menu">
             <Menu />
             <Effects />
+            <Fullscreen />
           </div>
           <div className="main">{children}</div>
         </div>

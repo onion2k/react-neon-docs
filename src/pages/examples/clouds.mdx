@@ -1,0 +1,33 @@
+export const frontmatter = {
+  title: 'Clouds',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2018-11-29T23:46:37.121Z',
+  tags: ['effect']
+}
+
+import Tile from "../../components/Tile.js";
+import withNeon from "react-neon";
+import clouds from "../../effects/clouds.js";
+const Clouds = withNeon(Tile, clouds);
+
+### Effects / Clouds
+
+The clouds effect puts IQ's raymarching clouds over a component.
+
+### Options
+
+Effect has no options.
+
+### Example
+
+<Clouds mixmode="hard-light" />
+
+### Example code
+
+```javascript
+import Tile from "../../components/Tile.js";
+import withNeon from "react-neon";
+import clouds from "../../effects/clouds.js";
+const Clouds = withNeon(Tile, clouds);
+```

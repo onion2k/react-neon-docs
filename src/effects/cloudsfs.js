@@ -165,4 +165,4 @@ const fs = `
     }
 `
 
-export default new fx.Shader({ vs: vs, fs: fs, tex: noise })
+export default new fx.Shader({ vs: vs, fs: fs, tex: noise, fullscreen: true })
