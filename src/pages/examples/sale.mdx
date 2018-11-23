@@ -1,0 +1,38 @@
+import react from 'react';
+import Sale from '../../effects/sale';
+
+export const frontmatter = {
+  title: 'Sale (three.js)',
+  author: 'Chris Neale',
+  draft: false,
+  date: '2016-09-03T23:46:37.121Z',
+  tags: ['effect']
+}
+
+import Tile from "../../components/Tile.js";
+import withNeon from "react-neon";
+const effect = new Sale();
+const SaleTile = withNeon(Tile, effect);
+
+### Effects / Sale
+
+The shader effect puts a rotating sale icon on a component, using three.js to generate and display the model. This effect is not part of the fx library, but it can be downloaded from the React Neon docs repo - [Sale effect](https://github.com/onion2k/react-neon-docs/blob/master/src/effects/sale.js).
+
+### Options
+
+Effect has no options.
+
+### Example
+
+<SaleTile />
+
+### Example Code
+
+```javascript
+import Tile from "../../components/Tile.js";
+import Sale from '../../effects/sale';
+import withNeon from "react-neon";
+const effect = new Sale();
+const SaleTile = withNeon(Tile, effect);
+```
+
