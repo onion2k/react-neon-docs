@@ -11,15 +11,12 @@ module.exports = {
         path: `${__dirname}/src/images/`
       }
     },
+    {
+      resolve: 'gatsby-plugin-transition-link'
+    },
     'gatsby-plugin-postcss',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    {
-      resolve: 'gatsby-plugin-transition-link',
-      options: {
-        layout: require.resolve(`./src/components/layout.js`)
-      }
-    },
     {
       resolve: 'gatsby-plugin-typography',
       options: {
@@ -79,7 +76,10 @@ module.exports = {
               noInlineHighlight: false
             }
           }
-        ]
+        ],
+        defaultLayouts: {
+          default: require.resolve('./src/components/layout.js')
+        }
       }
     },
     {

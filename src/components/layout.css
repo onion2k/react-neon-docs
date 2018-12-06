@@ -4,6 +4,7 @@
   display: grid;
   min-height: 100vh;
   grid-template-columns: 1fr 4fr;
+  background-color: white;
 }
 
 .menu {
