@@ -68,23 +68,55 @@ const Menu = () => (
           </svg>
         </a>
         <h3>
-          <AniLink fade to={`/`}>
+          <TransitionLink
+            length={3}
+            exit={{
+              trigger: ({ exit, node }) => {
+                console.log('Show overlayer')
+                console.log('Animate for 3s')
+                console.log('Hide overlayer')
+                console.log(exit, node)
+              },
+              length: 1
+            }}
+            entry={{
+              delay: 1
+            }}
+            to="/"
+          >
             React Neon
-          </AniLink>
+          </TransitionLink>
         </h3>
         <ul>
           {data.allMdx.edges.map(({ node }) => {
             return (
               !node.frontmatter.draft && (
                 <li key={node.id}>
-                  <AniLink
-                    fade
+                  <TransitionLink
+                    exit={{
+                      trigger: ({ exit, node }) => {
+                        console.log('Show exit overlayer')
+                        console.log('Animate for 3s')
+                        console.log('Hide exit overlayer')
+                        console.log(exit, node)
+                      },
+                      length: 3
+                    }}
+                    entry={{
+                      delay: 3,
+                      trigger: ({ exit, node }) => {
+                        console.log('Show entry overlayer')
+                        console.log('Animate for 3s')
+                        console.log('Hide entry overlayer')
+                        console.log(exit, node)
+                      }
+                    }}
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}
                   >
                     {node.frontmatter.title || node.parent.name}
-                  </AniLink>
+                  </TransitionLink>
                 </li>
               )
             )
