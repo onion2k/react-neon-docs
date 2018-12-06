@@ -68,7 +68,7 @@ const Menu = () => (
           </svg>
         </a>
         <h3>
-          <AniLink cover bg="#663399" to={`/`}>
+          <AniLink fade to={`/`}>
             React Neon
           </AniLink>
         </h3>
@@ -78,8 +78,7 @@ const Menu = () => (
               !node.frontmatter.draft && (
                 <li key={node.id}>
                   <AniLink
-                    cover
-                    bg="#663399"
+                    fade
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}
