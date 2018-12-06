@@ -15,6 +15,12 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
+      resolve: 'gatsby-plugin-transition-link',
+      options: {
+        layout: require.resolve(`./src/components/layout.js`)
+      }
+    },
+    {
       resolve: 'gatsby-plugin-typography',
       options: {
         pathToConfigModule: 'src/utils/typography',
@@ -73,10 +79,7 @@ module.exports = {
               noInlineHighlight: false
             }
           }
-        ],
-        defaultLayouts: {
-          default: require.resolve('./src/components/layout.js')
-        }
+        ]
       }
     },
     {

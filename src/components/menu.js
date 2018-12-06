@@ -1,6 +1,7 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import { Link } from 'gatsby'
+import TransitionLink from 'gatsby-plugin-transition-link'
 import './menu.css'
 
 const Menu = () => (
@@ -65,20 +66,26 @@ const Menu = () => (
           </svg>
         </a>
         <h3>
-          <Link to={`/`}>React Neon</Link>
+          <TransitionLink to={`/`}>React Neon</TransitionLink>
         </h3>
         <ul>
           {data.allMdx.edges.map(({ node }) => {
             return (
               !node.frontmatter.draft && (
                 <li key={node.id}>
-                  <Link
+                  <TransitionLink
+                    exit={{
+                      delay: 1.5
+                    }}
+                    entry={{
+                      delay: 1.5
+                    }}
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}
                   >
                     {node.frontmatter.title || node.parent.name}
-                  </Link>
+                  </TransitionLink>
                 </li>
               )
             )
