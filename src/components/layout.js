@@ -7,7 +7,7 @@ import './layout.css'
 
 class Layout extends React.Component {
   render() {
-    let { children, location } = this.props
+    let { children } = this.props
 
     return (
       <StaticQuery
@@ -87,6 +87,7 @@ class Layout extends React.Component {
               </svg>
             </a>
             <Inner>{children}</Inner>
+            <div id={'cover'} className="cover" />
           </>
         )}
       />

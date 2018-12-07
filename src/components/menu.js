@@ -6,6 +6,11 @@ import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 import './menu.css'
 
+const entryCleanup = () => {
+  const cover = document.getElementById('cover')
+  cover.classList.remove('entering')
+}
+
 const Menu = () => (
   <StaticQuery
     query={graphql`
@@ -69,7 +74,6 @@ const Menu = () => (
         </a>
         <h3>
           <TransitionLink
-            length={3}
             exit={{
               trigger: ({ exit, node }) => {
                 console.log('Show overlayer')
@@ -95,20 +99,20 @@ const Menu = () => (
                   <TransitionLink
                     exit={{
                       trigger: ({ exit, node }) => {
-                        console.log('Show exit overlayer')
-                        console.log('Animate for 3s')
-                        console.log('Hide exit overlayer')
-                        console.log(exit, node)
+                        const cover = document.getElementById('cover')
+                        cover.classList.remove('entering')
+                        cover.classList.add('exiting')
                       },
-                      length: 3
+                      length: 2
                     }}
                     entry={{
-                      delay: 3,
-                      trigger: ({ exit, node }) => {
-                        console.log('Show entry overlayer')
-                        console.log('Animate for 3s')
-                        console.log('Hide entry overlayer')
-                        console.log(exit, node)
+                      delay: 2,
+                      length: 2,
+                      trigger: ({ entry, node }) => {
+                        const cover = document.getElementById('cover')
+                        cover.classList.remove('exiting')
+                        cover.classList.add('entering')
+                        setTimeout(entryCleanup, 1000)
                       }
                     }}
                     to={`/${node.parent.relativeDirectory}/${
