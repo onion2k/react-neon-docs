@@ -16,6 +16,7 @@ const exitFunc = ({ exit, node }) => {
   cover.classList.remove('entering')
   cover.classList.add('exiting')
 }
+
 const entryFunc = ({ entry, node }) => {
   const cover = document.getElementById('cover')
   cover.classList.remove('exiting')
