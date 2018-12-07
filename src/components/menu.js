@@ -11,6 +11,18 @@ const entryCleanup = () => {
   cover.classList.remove('entering')
 }
 
+const exitFunc = ({ exit, node }) => {
+  const cover = document.getElementById('cover')
+  cover.classList.remove('entering')
+  cover.classList.add('exiting')
+}
+const entryFunc = ({ entry, node }) => {
+  const cover = document.getElementById('cover')
+  cover.classList.remove('exiting')
+  cover.classList.add('entering')
+  setTimeout(entryCleanup, 1000)
+}
+
 const Menu = () => (
   <StaticQuery
     query={graphql`
@@ -75,12 +87,7 @@ const Menu = () => (
         <h3>
           <TransitionLink
             exit={{
-              trigger: ({ exit, node }) => {
-                console.log('Show overlayer')
-                console.log('Animate for 3s')
-                console.log('Hide overlayer')
-                console.log(exit, node)
-              },
+              trigger: ({ exit, node }) => {},
               length: 1
             }}
             entry={{
@@ -98,22 +105,13 @@ const Menu = () => (
                 <li key={node.id}>
                   <TransitionLink
                     exit={{
-                      trigger: ({ exit, node }) => {
-                        const cover = document.getElementById('cover')
-                        cover.classList.remove('entering')
-                        cover.classList.add('exiting')
-                      },
+                      trigger: exitFunc,
                       length: 2
                     }}
                     entry={{
                       delay: 2,
                       length: 2,
-                      trigger: ({ entry, node }) => {
-                        const cover = document.getElementById('cover')
-                        cover.classList.remove('exiting')
-                        cover.classList.add('entering')
-                        setTimeout(entryCleanup, 1000)
-                      }
+                      trigger: entryFunc
                     }}
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
