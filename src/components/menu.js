@@ -1,27 +1,47 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import { Link } from 'gatsby'
 import TransitionLink from 'gatsby-plugin-transition-link'
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 import './menu.css'
+
+let t = 0
+let c
+let then = Date.now()
+let delta
+let now
+
+const lastExitToTransition = () => {
+  now = Date.now()
+  delta = now - then
+  then = now
+  t += delta
+  if (t > 1000) {
+    t = 1000
+    cancelAnimationFrame(c)
+  } else {
+    c = requestAnimationFrame(lastExitToTransition)
+  }
+}
 
 const entryCleanup = () => {
   const cover = document.getElementById('cover')
   cover.classList.remove('entering')
 }
 
-const exitFunc = ({ exit, node }) => {
+const exitFunc = () => {
   const cover = document.getElementById('cover')
   cover.classList.remove('entering')
   cover.classList.add('exiting')
+  then = Date.now()
+  t = 0
+  // lastExitToTransition()
 }
 
-const entryFunc = ({ entry, node }) => {
+const entryFunc = () => {
   const cover = document.getElementById('cover')
   cover.classList.remove('exiting')
   cover.classList.add('entering')
-  setTimeout(entryCleanup, 1000)
+  setTimeout(entryCleanup, 2000)
 }
 
 const Menu = () => (
@@ -88,10 +108,11 @@ const Menu = () => (
         <h3>
           <TransitionLink
             exit={{
-              trigger: ({ exit, node }) => {},
+              trigger: exitFunc,
               length: 1
             }}
             entry={{
+              trigger: entryFunc,
               delay: 1
             }}
             to="/"
@@ -111,7 +132,7 @@ const Menu = () => (
                     }}
                     entry={{
                       delay: 2,
-                      length: 2,
+                      length: 0,
                       trigger: entryFunc
                     }}
                     to={`/${node.parent.relativeDirectory}/${
