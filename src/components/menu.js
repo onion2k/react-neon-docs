@@ -9,39 +9,43 @@ let c
 let then = Date.now()
 let delta
 let now
+let dir
+let transitionTime = 3000
 
 const lastExitToTransition = () => {
   now = Date.now()
   delta = now - then
   then = now
   t += delta
-  if (t > 1000) {
-    t = 1000
-    cancelAnimationFrame(c)
+  if (t > transitionTime) {
+    const cover = document.getElementById('cover')
+    cover.classList.remove('exiting')
+    cover.classList.remove('entering')
   } else {
     c = requestAnimationFrame(lastExitToTransition)
   }
 }
 
-const entryCleanup = () => {
-  const cover = document.getElementById('cover')
-  cover.classList.remove('entering')
-}
-
 const exitFunc = () => {
+  cancelAnimationFrame(c)
   const cover = document.getElementById('cover')
   cover.classList.remove('entering')
   cover.classList.add('exiting')
   then = Date.now()
   t = 0
-  // lastExitToTransition()
+  dir = 1
+  lastExitToTransition()
 }
 
 const entryFunc = () => {
+  cancelAnimationFrame(c)
   const cover = document.getElementById('cover')
   cover.classList.remove('exiting')
   cover.classList.add('entering')
-  setTimeout(entryCleanup, 2000)
+  then = Date.now()
+  t = 0
+  dir = -1
+  lastExitToTransition()
 }
 
 const Menu = () => (
@@ -128,11 +132,12 @@ const Menu = () => (
                   <TransitionLink
                     exit={{
                       trigger: exitFunc,
-                      length: 2
+                      delay: 0,
+                      length: transitionTime / 1000
                     }}
                     entry={{
-                      delay: 2,
-                      length: 0,
+                      delay: transitionTime / 1000,
+                      length: transitionTime / 1000,
                       trigger: entryFunc
                     }}
                     to={`/${node.parent.relativeDirectory}/${
