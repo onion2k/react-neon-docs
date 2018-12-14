@@ -9,8 +9,7 @@ let c
 let then = Date.now()
 let delta
 let now
-let dir
-let transitionTime = 3000
+let transitionTime = 5000
 
 const lastExitToTransition = () => {
   now = Date.now()
@@ -27,7 +26,9 @@ const lastExitToTransition = () => {
 }
 
 const exitFunc = () => {
-  cancelAnimationFrame(c)
+  if (c) {
+    cancelAnimationFrame(c)
+  }
   const cover = document.getElementById('cover')
   cover.classList.remove('entering')
   cover.classList.add('exiting')
@@ -38,7 +39,9 @@ const exitFunc = () => {
 }
 
 const entryFunc = () => {
-  cancelAnimationFrame(c)
+  if (c) {
+    cancelAnimationFrame(c)
+  }
   const cover = document.getElementById('cover')
   cover.classList.remove('exiting')
   cover.classList.add('entering')
