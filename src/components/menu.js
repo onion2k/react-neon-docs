@@ -9,7 +9,9 @@ let c
 let then = Date.now()
 let delta
 let now
-let transitionTime = 5000
+let dir = 1
+let transitionTime = 2000
+let ctx, w, h
 
 const lastExitToTransition = () => {
   now = Date.now()
@@ -21,6 +23,15 @@ const lastExitToTransition = () => {
     cover.classList.remove('exiting')
     cover.classList.remove('entering')
   } else {
+    let x
+    ctx.clearRect(0, 0, w, h)
+    if (dir === -1) {
+      x = w * (t / transitionTime)
+      ctx.fillRect(w - x, 0, x, h)
+    } else {
+      x = w * (t / transitionTime)
+      ctx.fillRect(0, 0, x, h)
+    }
     c = requestAnimationFrame(lastExitToTransition)
   }
 }
@@ -35,6 +46,10 @@ const exitFunc = () => {
   then = Date.now()
   t = 0
   dir = 1
+  const ctxEl = document.getElementById('cover')
+  w = ctxEl.clientWidth
+  h = ctxEl.clientHeight
+  ctx = ctxEl.getContext('2d')
   lastExitToTransition()
 }
 
@@ -48,6 +63,10 @@ const entryFunc = () => {
   then = Date.now()
   t = 0
   dir = -1
+  const ctxEl = document.getElementById('cover')
+  w = ctxEl.clientWidth
+  h = ctxEl.clientHeight
+  ctx = ctxEl.getContext('2d')
   lastExitToTransition()
 }
 

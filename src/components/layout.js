@@ -87,7 +87,7 @@ class Layout extends React.Component {
               </svg>
             </a>
             <Inner>{children}</Inner>
-            <div id={'cover'} className="cover" />
+            <canvas id={'cover'} className="cover" />
           </>
         )}
       />
