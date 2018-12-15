@@ -7,7 +7,7 @@ let then = Date.now()
 let delta
 let now
 let dir = 1
-let transitionTime = 500
+let transitionTime = 1500
 let ctx, w, h
 
 const lastExitToTransition = () => {
