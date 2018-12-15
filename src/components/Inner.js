@@ -2,6 +2,7 @@ import React from 'react'
 import Menu from './menu'
 import Effects from './effects'
 import Fullscreen from './fullscreen'
+import GLTransitionOverlay from './GLTransitionOverlay'
 
 export default class Inner extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export default class Inner extends React.Component {
           <Fullscreen />
         </div>
         <div className="main">{children}</div>
+        <GLTransitionOverlay display={true} />
       </div>
     )
   }
