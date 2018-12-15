@@ -42,10 +42,6 @@ export default class Lantern extends Fx {
     light.position.set(0, 0, 0)
     this.scene.add(light)
 
-    const w = this.bb.width
-    const h = this.bb.height
-    const p = this.options.padding
-
     const pts = []
     const numPts = 20
     for (let i = 0; i < numPts * 2; i++) {
@@ -88,9 +84,7 @@ export default class Lantern extends Fx {
 
   draw() {
     this.renderer.render(this.scene, this.camera)
-
     this.sale.rotation.y += 0.04
-
     this.raf = requestAnimationFrame(this.draw)
   }
 }

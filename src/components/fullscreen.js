@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import { Link } from 'gatsby'
+import GLTransitionLink from './GLTransitionLink'
 import './menu.css'
 
 const Effects = () => (
@@ -44,13 +44,13 @@ const Effects = () => (
             return (
               !node.frontmatter.draft && (
                 <li key={node.id}>
-                  <Link
+                  <GLTransitionLink
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}
                   >
                     {node.frontmatter.title || node.parent.name}
-                  </Link>
+                  </GLTransitionLink>
                 </li>
               )
             )
