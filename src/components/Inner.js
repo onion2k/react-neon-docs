@@ -5,17 +5,26 @@ import Fullscreen from './fullscreen'
 import GLTransitionOverlay from './GLTransitionOverlay'
 
 export default class Inner extends React.Component {
+  constructor() {
+    super()
+    this.setTransition = this.setTransition.bind(this)
+    this.state = { transition: null }
+  }
+  setTransition(dir) {
+    console.log('Inner set ', dir)
+    this.setState({ transition: dir })
+  }
   render() {
     let { children } = this.props
     return (
       <div className="wrapper">
         <div className="menu">
-          <Menu />
-          <Effects />
-          <Fullscreen />
+          <Menu setTransition={this.setTransition} />
+          <Effects setTransition={this.setTransition} />
+          <Fullscreen setTransition={this.setTransition} />
         </div>
         <div className="main">{children}</div>
-        <GLTransitionOverlay display={true} />
+        <GLTransitionOverlay transition={this.state.transition} />
       </div>
     )
   }

@@ -6,6 +6,7 @@ const fs = `
   precision mediump float;
   #endif
 
+  uniform vec3 u_color;
   uniform vec2 u_resolution;
   uniform float u_time;
 
@@ -14,7 +15,7 @@ const fs = `
       vec2 uv = gl_FragCoord.xy / u_resolution;
       uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
       float cb = floor(uv.x*25.) + floor(uv.y*25.);
-      gl_FragColor = vec4(0.0, 0.0, 0.0,mod(cb, 2.0));
+      gl_FragColor = vec4(u_color, mod(cb, 2.0));
   }
 `
 
@@ -26,19 +27,26 @@ const vs = `
   }
 `
 
-export default class GLTransitionLink extends React.Component {
-  constructor() {
-    super()
+export default class GLTransitionOverylay extends React.Component {
+  constructor(props) {
+    super(props)
+    this.transition = null
+    this.g = 1.0
     this.renderGL = this.renderGL.bind(this)
   }
 
-  componentDidMount() {
+  resize() {
     this.cover = document.getElementById('cover')
     this.w = this.cover.clientWidth
     this.h = this.cover.clientHeight
     this.cover.width = this.w
     this.cover.height = this.h
+  }
 
+  componentDidMount() {
+    this.resize()
+
+    this.raf = null
     this.gl = twgl.getWebGLContext(this.cover)
     this.programInfo = twgl.createProgramInfo(this.gl, [vs, fs])
 
@@ -47,15 +55,37 @@ export default class GLTransitionLink extends React.Component {
     }
 
     this.bufferInfo = twgl.createBufferInfoFromArrays(this.gl, this.arrays)
-    // this.renderGL();
+  }
+
+  UNSAFE_componentWillReceiveProps(newProps) {
+    if (newProps.transition === 'exit') {
+      if (this.raf) {
+        cancelAnimationFrame(this.raf)
+      }
+      this.g = 1.0
+      this.resize()
+      this.renderGL(Date.now())
+    } else if (newProps.transition === 'entry') {
+      if (this.raf) {
+        cancelAnimationFrame(this.raf)
+      }
+      this.g = 0.0
+      this.resize()
+      this.renderGL(Date.now())
+    }
   }
 
   renderGL(time) {
-    twgl.resizeCanvasToDisplaySize(this.gl.canvas)
+    // twgl.resizeCanvasToDisplaySize(this.gl.canvas)
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
 
+    let r = 0.0
+    let g = this.g
+    let b = 0.0
+
     let uniforms = {
+      u_color: [r, g, b],
       u_time: time * 0.001,
       u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
     }
@@ -66,7 +96,7 @@ export default class GLTransitionLink extends React.Component {
     twgl.setUniforms(this.programInfo, uniforms)
     twgl.drawBufferInfo(this.gl, this.bufferInfo)
 
-    requestAnimationFrame(this.renderGL)
+    this.raf = requestAnimationFrame(this.renderGL)
   }
 
   render() {

@@ -42,13 +42,4 @@
   left: 0;
   z-index: 999;
   pointer-events: none;
-  display: none;
-}
-
-.entering {
-  display: block;
-}
-
-.exiting {
-  display: block;
 }

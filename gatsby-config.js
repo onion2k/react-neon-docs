@@ -12,7 +12,10 @@ module.exports = {
       }
     },
     {
-      resolve: 'gatsby-plugin-transition-link'
+      resolve: 'gatsby-plugin-transition-link',
+      options: {
+        layout: require.resolve('./src/components/layout.js')
+      }
     },
     'gatsby-plugin-postcss',
     'gatsby-transformer-sharp',
@@ -76,10 +79,7 @@ module.exports = {
               noInlineHighlight: false
             }
           }
-        ],
-        defaultLayouts: {
-          default: require.resolve('./src/components/layout.js')
-        }
+        ]
       }
     },
     {

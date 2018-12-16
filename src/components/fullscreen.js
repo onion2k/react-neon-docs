@@ -3,7 +3,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import GLTransitionLink from './GLTransitionLink'
 import './menu.css'
 
-const Effects = () => (
+const Effects = props => (
   <StaticQuery
     query={graphql`
       query FullscreenQuery {
@@ -45,6 +45,7 @@ const Effects = () => (
               !node.frontmatter.draft && (
                 <li key={node.id}>
                   <GLTransitionLink
+                    setTransition={props.setTransition}
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}

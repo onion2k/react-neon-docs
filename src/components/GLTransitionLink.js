@@ -1,15 +1,21 @@
 import React from 'react'
 import TransitionLink from 'gatsby-plugin-transition-link'
 
-let transitionTime = 1000
+let transitionTime = 5000
 
 export default class GLTransitionLink extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   exitFunc() {
-    //exit
+    console.log('Exit func')
+    this.props.setTransition('exit')
   }
 
   entryFunc() {
-    //entry
+    console.log('Entry func')
+    this.props.setTransition('entry')
   }
 
   render() {
