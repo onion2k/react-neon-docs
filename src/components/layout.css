@@ -105,3 +105,8 @@
     transform: translate(300px);
   }
 }
+
+.tl-wrapper[style] {
+  width: auto !important;
+  position: initial !important;
+}
