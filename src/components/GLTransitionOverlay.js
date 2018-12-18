@@ -16,7 +16,7 @@ const fs = `
   void main()
   {
       vec2 uv = gl_FragCoord.xy / u_resolution;
-      uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
+      uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0);
       float cb = floor(uv.x*25.) + floor(uv.y*25.);
       vec3 color = u_color * mod(cb, 2.0);
       gl_FragColor = vec4(color, u_opacity);
@@ -69,9 +69,7 @@ export default class GLTransitionOverylay extends React.Component {
   UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.transition === 'exit') {
       this.target = 1
-      // this.resize()
     } else if (newProps.transition === 'entry') {
-      // this.resize()
       this.target = -1
     }
   }
