@@ -11,7 +11,7 @@ export default class Inner extends React.Component {
     this.state = { transition: null }
   }
   setTransition(dir) {
-    console.log('Inner set ', dir)
+    console.log('Set transition', dir)
     this.setState({ transition: dir })
   }
   render() {

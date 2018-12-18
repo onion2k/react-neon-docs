@@ -1,5 +1,7 @@
 import React from 'react'
 import * as twgl from 'twgl.js'
+import { delegateToSchema } from 'graphql-tools'
+import { DH_CHECK_P_NOT_PRIME } from 'constants'
 
 const fs = `
   #ifdef GL_ES
@@ -7,6 +9,7 @@ const fs = `
   #endif
 
   uniform vec3 u_color;
+  uniform float u_opacity;
   uniform vec2 u_resolution;
   uniform float u_time;
 
@@ -15,7 +18,7 @@ const fs = `
       vec2 uv = gl_FragCoord.xy / u_resolution;
       uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
       float cb = floor(uv.x*25.) + floor(uv.y*25.);
-      gl_FragColor = vec4(u_color, mod(cb, 2.0));
+      gl_FragColor = vec4(u_color, mod(cb, 2.0) * u_opacity);
   }
 `
 
@@ -32,6 +35,10 @@ export default class GLTransitionOverylay extends React.Component {
     super(props)
     this.transition = null
     this.g = 1.0
+    this.ramp = 0
+    this.target = 0
+    this.pTime = Date.now()
+    this.raf = null
     this.renderGL = this.renderGL.bind(this)
   }
 
@@ -59,34 +66,45 @@ export default class GLTransitionOverylay extends React.Component {
 
   UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.transition === 'exit') {
-      if (this.raf) {
-        cancelAnimationFrame(this.raf)
-      }
-      this.g = 1.0
+      this.target = 1000
       this.resize()
-      this.renderGL(Date.now())
+      if (!this.raf) {
+        console.log('First render')
+        this.renderGL()
+      }
     } else if (newProps.transition === 'entry') {
-      if (this.raf) {
-        cancelAnimationFrame(this.raf)
-      }
-      this.g = 0.0
       this.resize()
-      this.renderGL(Date.now())
+      this.target = 0
+      if (!this.raf) {
+        console.log('First render')
+        this.renderGL()
+      }
     }
   }
 
-  renderGL(time) {
+  renderGL() {
     // twgl.resizeCanvasToDisplaySize(this.gl.canvas)
+
+    let time = Date.now()
+    let delta = time - this.pTime
+    this.pTime = time
+
+    if (this.target === 1000) {
+      this.ramp += delta
+    } else {
+      this.ramp -= delta
+    }
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
 
     let r = 0.0
-    let g = this.g
+    let g = 0.0
     let b = 0.0
 
     let uniforms = {
       u_color: [r, g, b],
-      u_time: time * 0.001,
+      u_opacity: this.ramp / 5000,
+      u_time: this.ramp * 0.001,
       u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
     }
 
@@ -96,7 +114,12 @@ export default class GLTransitionOverylay extends React.Component {
     twgl.setUniforms(this.programInfo, uniforms)
     twgl.drawBufferInfo(this.gl, this.bufferInfo)
 
-    this.raf = requestAnimationFrame(this.renderGL)
+    if (this.ramp > 0) {
+      this.raf = requestAnimationFrame(this.renderGL)
+    } else {
+      this.ramp = 0
+      this.raf = null
+    }
   }
 
   render() {
