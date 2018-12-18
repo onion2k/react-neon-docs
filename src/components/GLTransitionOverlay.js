@@ -1,7 +1,7 @@
 import React from 'react'
 import * as twgl from 'twgl.js'
-import { delegateToSchema } from 'graphql-tools'
-import { DH_CHECK_P_NOT_PRIME } from 'constants'
+
+let transitionTime = 1000
 
 const fs = `
   #ifdef GL_ES
@@ -18,7 +18,8 @@ const fs = `
       vec2 uv = gl_FragCoord.xy / u_resolution;
       uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0) * (sin(u_time) * 0.05);
       float cb = floor(uv.x*25.) + floor(uv.y*25.);
-      gl_FragColor = vec4(u_color, mod(cb, 2.0) * u_opacity);
+      vec3 color = u_color * mod(cb, 2.0);
+      gl_FragColor = vec4(color, u_opacity);
   }
 `
 
@@ -62,64 +63,55 @@ export default class GLTransitionOverylay extends React.Component {
     }
 
     this.bufferInfo = twgl.createBufferInfoFromArrays(this.gl, this.arrays)
+    this.renderGL()
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.transition === 'exit') {
-      this.target = 1000
-      this.resize()
-      if (!this.raf) {
-        console.log('First render')
-        this.renderGL()
-      }
+      this.target = 1
+      // this.resize()
     } else if (newProps.transition === 'entry') {
-      this.resize()
-      this.target = 0
-      if (!this.raf) {
-        console.log('First render')
-        this.renderGL()
-      }
+      // this.resize()
+      this.target = -1
     }
   }
 
   renderGL() {
-    // twgl.resizeCanvasToDisplaySize(this.gl.canvas)
-
     let time = Date.now()
     let delta = time - this.pTime
     this.pTime = time
 
-    if (this.target === 1000) {
+    if (this.target === 1) {
       this.ramp += delta
-    } else {
+    } else if (this.target === -1) {
       this.ramp -= delta
     }
 
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
-
-    let r = 0.0
-    let g = 0.0
-    let b = 0.0
-
-    let uniforms = {
-      u_color: [r, g, b],
-      u_opacity: this.ramp / 5000,
-      u_time: this.ramp * 0.001,
-      u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
-    }
-
-    this.gl.useProgram(this.programInfo.program)
-
-    twgl.setBuffersAndAttributes(this.gl, this.programInfo, this.bufferInfo)
-    twgl.setUniforms(this.programInfo, uniforms)
-    twgl.drawBufferInfo(this.gl, this.bufferInfo)
-
-    if (this.ramp > 0) {
-      this.raf = requestAnimationFrame(this.renderGL)
-    } else {
+    if (this.ramp < 0) {
       this.ramp = 0
-      this.raf = null
+      this.target = 0
+    } else {
+      this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
+
+      let r = 1.0
+      let g = 0.0
+      let b = 0.0
+
+      let uniforms = {
+        u_color: [r, g, b],
+        u_opacity: this.ramp / transitionTime,
+        u_time: this.ramp * 0.001,
+        u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
+      }
+
+      this.gl.useProgram(this.programInfo.program)
+
+      twgl.setBuffersAndAttributes(this.gl, this.programInfo, this.bufferInfo)
+      twgl.setUniforms(this.programInfo, uniforms)
+      twgl.drawBufferInfo(this.gl, this.bufferInfo)
     }
+
+    this.raf = requestAnimationFrame(this.renderGL)
   }
 
   render() {
