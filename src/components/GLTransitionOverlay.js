@@ -5,22 +5,36 @@ let transitionTime = 1000
 
 const fs = `
   #ifdef GL_ES
-  precision mediump float;
+    precision mediump float;
   #endif
 
-  uniform vec3 u_color;
-  uniform float u_opacity;
   uniform vec2 u_resolution;
+  uniform float u_opacity;
   uniform float u_time;
 
-  void main()
-  {
-      vec2 uv = gl_FragCoord.xy / u_resolution;
-      uv = uv + vec2(0.5 - cos(uv.y * 8.0), 2.0);
-      float cb = floor(uv.x*25.) + floor(uv.y*25.);
-      vec3 color = u_color * mod(cb, 2.0);
-      gl_FragColor = vec4(color, u_opacity);
+  #define SCALE 50.0
+  #define SPEED 1.0
+
+  float getColorComponent(float dist, float angle) {
+    return pow(
+        (sin(dist * (SCALE) + angle - (u_time * SPEED) ) + 1.0),
+        1.2
+    );
   }
+
+  void main() {
+    vec2 delta = (gl_FragCoord.xy - .5 * u_resolution.xy);
+    float dist = length(delta / u_resolution.y),
+    angle = atan(delta.x, delta.y);
+
+    gl_FragColor = vec4(
+      getColorComponent(dist, angle),
+      getColorComponent(dist, angle),
+      getColorComponent(dist, angle),
+      u_opacity
+    );
+  }
+
 `
 
 const vs = `
@@ -45,8 +59,8 @@ export default class GLTransitionOverylay extends React.Component {
 
   resize() {
     this.cover = document.getElementById('cover')
-    this.w = this.cover.clientWidth
-    this.h = this.cover.clientHeight
+    this.w = this.cover.clientWidth / 3
+    this.h = this.cover.clientHeight / 3
     this.cover.width = this.w
     this.cover.height = this.h
   }
@@ -91,14 +105,9 @@ export default class GLTransitionOverylay extends React.Component {
     } else {
       this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
 
-      let r = 1.0
-      let g = 0.0
-      let b = 0.0
-
       let uniforms = {
-        u_color: [r, g, b],
+        u_time: this.ramp * 0.01,
         u_opacity: this.ramp / transitionTime,
-        u_time: this.ramp * 0.001,
         u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
       }
 
