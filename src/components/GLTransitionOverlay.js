@@ -23,8 +23,8 @@ const fs = `
   }
 
   void main() {
-    vec2 delta = (gl_FragCoord.xy - .5 * u_resolution.xy);
-    float dist = length(delta / u_resolution.y),
+    vec2 delta = (gl_FragCoord.xy - .5 * u_resolution.xy) / u_resolution.y;
+    float dist = length(delta),
     angle = atan(delta.x, delta.y);
 
     gl_FragColor = vec4(
