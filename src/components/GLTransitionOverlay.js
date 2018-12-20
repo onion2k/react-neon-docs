@@ -12,8 +12,8 @@ const fs = `
   uniform float u_opacity;
   uniform float u_time;
 
-  #define SCALE 50.0
-  #define SPEED 1.0
+  #define SCALE 240.0
+  #define SPEED 3.0
 
   float getColorComponent(float dist, float angle) {
     return pow(
@@ -28,10 +28,10 @@ const fs = `
     angle = atan(delta.x, delta.y);
 
     gl_FragColor = vec4(
-      getColorComponent(dist, angle),
-      getColorComponent(dist, angle),
-      getColorComponent(dist, angle),
-      1. - getColorComponent(dist, angle)
+      getColorComponent(dist, sin(angle)),
+      getColorComponent(dist + 1., angle),
+      getColorComponent(dist - 1., angle),
+      u_opacity
     );
   }
 
@@ -59,8 +59,8 @@ export default class GLTransitionOverylay extends React.Component {
 
   resize() {
     this.cover = document.getElementById('cover')
-    this.w = this.cover.clientWidth / 3
-    this.h = this.cover.clientHeight / 3
+    this.w = this.cover.clientWidth / 4
+    this.h = this.cover.clientHeight / 4
     this.cover.width = this.w
     this.cover.height = this.h
   }
@@ -69,18 +69,8 @@ export default class GLTransitionOverylay extends React.Component {
     this.resize()
 
     this.raf = null
-    // let gl = document.getElementById('cover').getContext('webgl')
-
     this.gl = twgl.getWebGLContext(this.cover, { premultipliedAlpha: false })
     this.programInfo = twgl.createProgramInfo(this.gl, [vs, fs])
-
-    // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
-    // this.gl.blendFuncSeparate(
-    //   this.gl.SRC_ALPHA,
-    //   this.gl.ONE_MINUS_SRC_ALPHA,
-    //   this.gl.ONE,
-    //   this.gl.ONE_MINUS_SRC_ALPHA
-    // )
 
     this.arrays = {
       position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
@@ -115,9 +105,11 @@ export default class GLTransitionOverylay extends React.Component {
     } else {
       this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height)
 
+      let t = this.ramp / transitionTime
+
       let uniforms = {
         u_time: this.ramp * 0.01,
-        u_opacity: this.ramp / transitionTime,
+        u_opacity: t * (2 - t),
         u_resolution: [this.gl.canvas.width, this.gl.canvas.height]
       }
 
