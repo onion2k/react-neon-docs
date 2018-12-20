@@ -59,8 +59,8 @@ export default class GLTransitionOverylay extends React.Component {
 
   resize() {
     this.cover = document.getElementById('cover')
-    this.w = this.cover.clientWidth / 4
-    this.h = this.cover.clientHeight / 4
+    this.w = this.cover.clientWidth / 2
+    this.h = this.cover.clientHeight / 2
     this.cover.width = this.w
     this.cover.height = this.h
   }
