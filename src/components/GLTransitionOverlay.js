@@ -31,7 +31,7 @@ const fs = `
       getColorComponent(dist, angle),
       getColorComponent(dist, angle),
       getColorComponent(dist, angle),
-      u_opacity
+      1. - getColorComponent(dist, angle)
     );
   }
 
@@ -69,8 +69,18 @@ export default class GLTransitionOverylay extends React.Component {
     this.resize()
 
     this.raf = null
-    this.gl = twgl.getWebGLContext(this.cover)
+    // let gl = document.getElementById('cover').getContext('webgl')
+
+    this.gl = twgl.getWebGLContext(this.cover, { premultipliedAlpha: false })
     this.programInfo = twgl.createProgramInfo(this.gl, [vs, fs])
+
+    // gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+    // this.gl.blendFuncSeparate(
+    //   this.gl.SRC_ALPHA,
+    //   this.gl.ONE_MINUS_SRC_ALPHA,
+    //   this.gl.ONE,
+    //   this.gl.ONE_MINUS_SRC_ALPHA
+    // )
 
     this.arrays = {
       position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
