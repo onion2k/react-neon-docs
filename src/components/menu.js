@@ -1,10 +1,10 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import GLTransitionLink from './GLTransitionLink'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 import './menu.css'
 
-const Menu = props => (
+const Menu = () => (
   <StaticQuery
     query={graphql`
       query pagesQuery {
@@ -68,23 +68,23 @@ const Menu = props => (
               </svg>
             </a>
             <h3>
-              <GLTransitionLink setTransition={props.setTransition} to="/">
+              <AniLink fade to="/">
                 React Neon
-              </GLTransitionLink>
+              </AniLink>
             </h3>
             <ul>
               {data.allMdx.edges.map(({ node }) => {
                 return (
                   !node.frontmatter.draft && (
                     <li key={node.id}>
-                      <GLTransitionLink
-                        setTransition={props.setTransition}
+                      <AniLink
+                        fade
                         to={`/${node.parent.relativeDirectory}/${
                           node.parent.name
                         }/`}
                       >
                         {node.frontmatter.title || node.parent.name}
-                      </GLTransitionLink>
+                      </AniLink>
                     </li>
                   )
                 )

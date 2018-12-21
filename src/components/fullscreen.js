@@ -1,9 +1,9 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import GLTransitionLink from './GLTransitionLink'
+import AniLink from 'gatsby-plugin-transition-link/AniLink'
 import './menu.css'
 
-const Effects = props => (
+const Effects = () => (
   <StaticQuery
     query={graphql`
       query FullscreenQuery {
@@ -44,14 +44,14 @@ const Effects = props => (
             return (
               !node.frontmatter.draft && (
                 <li key={node.id}>
-                  <GLTransitionLink
-                    setTransition={props.setTransition}
+                  <AniLink
+                    fade
                     to={`/${node.parent.relativeDirectory}/${
                       node.parent.name
                     }/`}
                   >
                     {node.frontmatter.title || node.parent.name}
-                  </GLTransitionLink>
+                  </AniLink>
                 </li>
               )
             )
