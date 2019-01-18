@@ -11355,13 +11355,14 @@ react-live@^1.11.0:
     prop-types "^15.5.8"
     unescape "^0.2.0"
 
-react-neon@^0.6.2:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.6.3.tgz#8c362b4da91b7b2726944ab0c65138d9f3e60fbd"
-  integrity sha512-muIozsyY64Fkz8H2MIJZFzO6w/lv+yvxmoecQdqLYX5qt243rJstNK1EKNPGaaDUysTXEn20po2K53vq4Rd0fQ==
+react-neon@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/react-neon/-/react-neon-0.6.4.tgz#377d50b31d568583f9709e0fb59329b8088a2185"
+  integrity sha512-TcVLGmuKZl7bLRYEfc1itUyjFQQnJEfVH4ICIkcdtFZMHvmI8EVfkw3ZYL5Qb7MqkJkGuIwJY8e/ahk9ePKzXg==
   dependencies:
     "@babel/plugin-transform-modules-umd" "^7.1.0"
     babel-plugin-add-module-exports "^1.0.0"
+    resize-observer "^1.0.0"
     rollup-plugin-babel "^4.0.3"
     twgl.js "^4.5.1"
 
@@ -11886,6 +11887,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-observer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/resize-observer/-/resize-observer-1.0.0.tgz#4f8380b73b411af4ed7d916fe85a2d59900e71ef"
+  integrity sha512-D7UFShDm2TgrEDEyeg+/tTEbvOgPWlvPAfJtxiKp+qutu6HowmcGJKjECgGru0PPDIj3SAucn3ZPpOx54fF7DQ==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
